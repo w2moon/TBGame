@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "target": "es5",
+        "module": "commonjs",
+         "noImplicitAny": true,
+         "experimentalDecorators": true,
+         "removeComments": true,
+         "preserveConstEnums": true,
+         "sourceRoot": "ts",
+         "outDir": "js",
+         "sourceMap": true
+    }
+}
