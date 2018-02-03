@@ -1,14 +1,17 @@
 {
     "compilerOptions": {
-        "allowJs": true,
+        "allowJs": false,
         "target": "es5",
-        "module": "commonjs",
+        "module": "amd",
          "noImplicitAny": true,
          "experimentalDecorators": true,
          "removeComments": true,
          "preserveConstEnums": true,
          "sourceRoot": "ts",
-         "outDir": "js",
+         "outFile": "js/TBGame.js",
          "sourceMap": true
-    }
+    },
+    "include": [
+        "ts"
+    ]
 }

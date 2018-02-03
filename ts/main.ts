@@ -1,1 +1,3 @@
-import * as TBGame from './Base/GameMode';
+/// <reference path="Base/GameMode.ts" />
+
+let gameMode = new TBGame.GameMode();
