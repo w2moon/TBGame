@@ -1,5 +1,5 @@
 /// <reference path="Entity.ts" />
-namespace TBGame{
+namespace tbgame{
     /**
      * 区域
      */

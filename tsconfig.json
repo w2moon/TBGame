@@ -7,11 +7,12 @@
          "experimentalDecorators": true,
          "removeComments": true,
          "preserveConstEnums": true,
-         "outFile": "js/TBGame.js",
+         "outFile": "js/tbgame.js",
          "sourceMap": true
     },
     "include": [
         "plugins/**/*",
+        "wlscript/**/*",
         "ts/Base/**/*",
         "ts/main.ts"
     ]

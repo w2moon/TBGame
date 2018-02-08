@@ -1,7 +1,7 @@
 
-    let cards:Array<TBGame.Card> = [];
-    function createAttackCard():TBGame.Card{
-        let card = new TBGame.Card();
+    let cards:Array<tbgame.Card> = [];
+    function createAttackCard():tbgame.Card{
+        let card = new tbgame.Card();
         card.setProperty("name","sword");
         card.setProperty("type","attack");
         card.setProperty("cost",1);
@@ -9,8 +9,8 @@
         return card;
     }
 
-    function createDefenseCard():TBGame.Card{
-        let card = new TBGame.Card();
+    function createDefenseCard():tbgame.Card{
+        let card = new tbgame.Card();
         card.setProperty("name","shield");
         card.setProperty("type","skill");
         card.setProperty("cost",1);
@@ -22,26 +22,49 @@
         cards.push(createDefenseCard());
     }
    
+    interface TemplateGameMode{
+        winCondition:{
+            and:{
+                and:{
+                    filter:{
+                        array:{
+                            group:{
+                                propertyName:"group",
+                            }
+                        }
+                    }
+                    
+                }
+            },
+            or:{
+
+            }
+        },
+    }
     
-    
-    let gameMode = new TBGame.GameMode();
+    let gameMode = new tbgame.GameMode();
     gameMode.name = "SlayTheSpire";
+    //定义胜利条件
+
+    //定义逻辑语义
+    //循环(each,while,break)，加，减，乘，除，函数定义，变量定义，条件控制（if ）,判断（等于 大于 小于 非） 类型（数字 字符串 对象）
     
-    var player = new TBGame.Player();
-    player.controller = new TBGame.ControllerPlayer();
+    
+    var player = new tbgame.Player();
+    player.controller = new tbgame.ControllerPlayer();
     player.setProperty("energy",3);
     player.setProperty("hp",50);
     player.group = "group1";
     player.cards = cards;
     
-    var monster1 = new TBGame.Player();
-    monster1.controller = new TBGame.ControllerMonsterEasy();
+    var monster1 = new tbgame.Player();
+    monster1.controller = new tbgame.ControllerMonsterEasy();
     monster1.setProperty("hp",10);
     monster1.group = "group2";
     monster1.cards = cards;
     
-    var monster2 = new TBGame.Player();
-    monster2.controller = new TBGame.ControllerMonsterEasy();
+    var monster2 = new tbgame.Player();
+    monster2.controller = new tbgame.ControllerMonsterEasy();
     monster2.setProperty("hp",20);
     monster2.group = "group2";
     monster2.cards = cards;

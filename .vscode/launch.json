@@ -10,6 +10,7 @@
             "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}/ts/main.ts",
+            "preLaunchTask": "tsc",
             "outFiles": [
                 "${workspaceFolder}/js/**/*.js"
             ]

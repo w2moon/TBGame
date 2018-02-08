@@ -1,6 +1,6 @@
 /// <reference path="Entity.ts" />
 
-namespace TBGame{
+namespace tbgame{
     /**
      * 状态
      */

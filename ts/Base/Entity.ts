@@ -1,4 +1,4 @@
-namespace TBGame{
+namespace tbgame{
     /**
      * 标签字典
      */

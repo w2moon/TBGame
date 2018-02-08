@@ -1,5 +1,5 @@
 /// <reference path="Entity.ts" />
-namespace TBGame{
+namespace tbgame{
     interface RegionDictionary{
         [index:string]:Array<Card>;
     }
@@ -68,6 +68,7 @@ namespace TBGame{
             this.shield = 0;
             this.buffs = [];
 
+            this.regions = {};
             this.regions.deck = [];
             this.regions.hand = [];
             this.regions.grave = [];
