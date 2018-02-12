@@ -6,7 +6,8 @@
   "dependencies": {
     "@types/lodash": "^4.14.100",
     "@types/node": "^9.4.0",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "mapstrace": "^1.0.0"
   },
   "devDependencies": {},
   "scripts": {},

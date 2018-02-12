@@ -1,11 +1,16 @@
 /// <reference path="Entity.ts" />
 namespace tbgame{
+    
     /**
      * 游戏模式，这里管理回合在角色间的流转
      */
     export class GameMode extends Entity {
         players:Array<Player>;
         groups:{ [index:string]:Array<Player>};
+        /**
+         * 当前回合数
+         */
+        turn:Turn;
         constructor(){
             super();
             this.players = [];
@@ -32,6 +37,10 @@ namespace tbgame{
             group.push(player);
         }
 
+        /**
+         * 检测所有角色，如果有一组角色的所有体力都小于0，则这一组失败。
+         * 如果只剩一组角色，则游戏结束
+         */
         checkWin(){
             let loseGroup = [];
             let groupNum = 0;
@@ -58,7 +67,7 @@ namespace tbgame{
                     let win = loseGroup.indexOf(name) == -1;
                     for(let i=0;i<group.length;++i){
                         let player = group[i];
-                        player.emit("gamefinish",win);
+                        player.gameFinish(win);
                     }
                     
                 }
@@ -72,17 +81,22 @@ namespace tbgame{
          * 游戏开始
          */
         start(){
-            let waitNum = this.players.length;
-            function finished(){
-                waitNum--;
-                if(waitNum<=0){
-                    //all
-                    print("all prepared");
-                }
-            }
-            for(let player of this.players){
-                player.prepare(finished);
-            }
+            log.i("角色开始准备游戏");
+
+            util.waitGroupCallByName(this.players,"prepare",()=>{
+                log.i("所有角色准备完毕，游戏开始");
+                this.next(1);
+                
+            });
+            
+        }
+
+        next(turnNum:number){
+            log.i("第"+turnNum+"回合开始");
+            util.waitGroupCallByFunction(this.players,this.turn.start.bind(this),()=>{
+                log.i("第"+turnNum+"回合结束");
+                this.next(turnNum+1);
+            },turnNum);
         }
 
         /**

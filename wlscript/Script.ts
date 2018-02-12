@@ -147,13 +147,13 @@ namespace wlscript{
 
     
 
-    export function exec(obj:ScriptObject){
+    export function exec(obj:NodeObject){
 
     }
 
     interface GroupParam{
         /** 要分组的对象 */
-        target:ScriptObject;
+        target:NodeObject;
         /** 根据属性名称分组 */
         name:string;
     }
@@ -161,13 +161,13 @@ namespace wlscript{
     /**
      * 把对象按指定属性分组
      */
-    export function group(param:GroupParam):ScriptObject{
-        
+    export function group(param:GroupParam):NodeObject{
+        return;
     }
 
     interface FilterParam{
         /** 要过滤的对象 */
-        target:ScriptObject;
+        target:NodeObject;
         /** 过滤条件 */
         condition:ConditionParam;
     }
@@ -175,8 +175,8 @@ namespace wlscript{
     /**
      * 过滤符合条件的对象
      */
-    export function filter(param:FilterParam):ScriptObject{
-
+    export function filter(param:FilterParam):NodeObject{
+        return;
     }
 
     interface ConditionParam{
@@ -184,7 +184,7 @@ namespace wlscript{
     }
 
     export function condition(param:ConditionParam):boolean{
-
+        return true;
     }
 
     export function each():void{

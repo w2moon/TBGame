@@ -11,9 +11,11 @@
          "sourceMap": true
     },
     "include": [
+        "plugins/util.js",
         "plugins/**/*",
         "wlscript/**/*",
         "ts/Base/**/*",
+        "ts/CmdController.ts",
         "ts/main.ts"
     ]
 }

@@ -10,7 +10,7 @@ namespace tbgame {
         }
 
         chooseCard(cards:Array<Card>,num:number,cb:(choosedCards:Array<Card>)=>void){
-
+            cb(cards);
         }
     }
 

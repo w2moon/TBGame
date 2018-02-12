@@ -1,4 +1,5 @@
 namespace tbgame{
+    
     /**
      * 标签字典
      */
@@ -49,7 +50,7 @@ namespace tbgame{
             if(this.tags[tag]){
                 this.tags[tag]--;
                 if(this.tags[tag]<0){
-                    error("illegal removeTag",tag);
+                    log.e("illegal removeTag",tag);
                 }
                 /**
                  * 标签减少事件

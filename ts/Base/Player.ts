@@ -4,6 +4,12 @@ namespace tbgame{
         [index:string]:Array<Card>;
     }
 
+    const PlayerEvent = {
+        WillStartGame:"WillStartGame",
+        RecycleGrave:"RecycleGrave",
+        Draw:"Draw",
+    }
+
     /**
      * 角色定义
      */
@@ -27,6 +33,7 @@ namespace tbgame{
          * 卡牌
          */
         cards:Array<Card>;
+
 
         /**
          * 游戏中属性
@@ -75,23 +82,64 @@ namespace tbgame{
         }
 
         /**
+         * 游戏结束
+         */
+        gameFinish(isWin:boolean):void{
+
+        }
+
+        /**
          * 准备开始游戏
          */
         prepare(cb:()=>void){
-            //洗牌
+            log.i(this.getProperty("name")+"洗牌");
             this.deck = _.shuffle(this.cards);
 
-            //对所有牌执行开始阶段逻辑
-            _.each(this.deck,(card)=>{
-               // card.onPrepare();
-            });
+            // log.i(this.getProperty("name")+"卡牌onPrepare");
+            // _.each(this.deck,(card)=>{
+            //    // card.onPrepare();
+            // });
 
-            //抽起始牌
-            let cards:Array<Card>;
-            //由角色确认抽牌
-            this.controller.chooseCard(cards,1,function(){
-
+           // log.i(this.getProperty("name")+"抽起手卡牌");
+           // let cards:Array<Card>;
+            
+            /*
+            log.i(this.getProperty("name")+"等待确认卡牌");
+            this.controller.chooseCard(cards,1,()=>{
+                log.i(this.getProperty("name")+"确认卡牌完毕");
+                cb();
             });
+            */
+           this.emit(PlayerEvent.WillStartGame);
+            cb();
+            
+        }
+
+        /**
+         * 抽一张牌
+         * @param cb 抽牌完成
+         */
+        draw(cb:()=>void){
+            log.i(player.getProperty("name")+"抽牌");
+            if(this.deck.length <= 0){
+                log.i(player.getProperty("name")+"抽牌堆为空，墓地进入抽牌堆");
+                this.deck = this.grave;
+                this.grave = [];
+
+                if(this.deck.length <= 0){
+                    log.i(player.getProperty("name")+"无牌可抽");
+                }
+                this.emit(PlayerEvent.RecycleGrave);
+            }
+
+            let card = this.deck.pop();
+            this.hand.push(card);
+            this.emit(PlayerEvent.Draw);
+            cb();
+        }
+
+        play(){
+
         }
 
     }

@@ -22,49 +22,36 @@
         cards.push(createDefenseCard());
     }
    
-    interface TemplateGameMode{
-        winCondition:{
-            and:{
-                and:{
-                    filter:{
-                        array:{
-                            group:{
-                                propertyName:"group",
-                            }
-                        }
-                    }
-                    
-                }
-            },
-            or:{
-
-            }
-        },
-    }
+    
     
     let gameMode = new tbgame.GameMode();
-    gameMode.name = "SlayTheSpire";
+    gameMode.setProperty("name","SlayTheSpire");
+    gameMode.turn = new tbgame.Turn();
     //定义胜利条件
 
     //定义逻辑语义
     //循环(each,while,break)，加，减，乘，除，函数定义，变量定义，条件控制（if ）,判断（等于 大于 小于 非） 类型（数字 字符串 对象）
-    
+   
     
     var player = new tbgame.Player();
-    player.controller = new tbgame.ControllerPlayer();
+    player.controller = new tbgame.CmdController();
+    player.setProperty("name","player1");
     player.setProperty("energy",3);
     player.setProperty("hp",50);
     player.group = "group1";
     player.cards = cards;
     
+    
     var monster1 = new tbgame.Player();
     monster1.controller = new tbgame.ControllerMonsterEasy();
+    monster1.setProperty("name","monster1");
     monster1.setProperty("hp",10);
     monster1.group = "group2";
     monster1.cards = cards;
     
     var monster2 = new tbgame.Player();
     monster2.controller = new tbgame.ControllerMonsterEasy();
+    monster2.setProperty("name","monster2");
     monster2.setProperty("hp",20);
     monster2.group = "group2";
     monster2.cards = cards;
@@ -76,5 +63,3 @@
     gameMode.start();
 
    
-    console.log(12323)
-
