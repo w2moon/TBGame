@@ -26,7 +26,7 @@ namespace tbgame{
 
             log.i(player.getProperty("name")+"抽牌阶段");
             this.state = TurnState.Draw;
-            player.draw();
+            player.draw(()=>{});
 
             log.i(player.getProperty("name")+"出牌阶段");
             this.state = TurnState.Play;
