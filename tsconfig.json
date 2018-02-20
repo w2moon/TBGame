@@ -16,6 +16,8 @@
         "wlscript/**/*",
         "ts/Base/**/*",
         "ts/CmdController.ts",
+        "ts/CmdViewer.ts",
+        "ts/CmdAnimation.ts",
         "ts/main.ts"
     ]
 }
