@@ -95,7 +95,6 @@ namespace tbgame{
             log.i(this.getProperty("name")+"洗牌");
             this.deck = _.shuffle(this.cards);
             this.hand = [];
-
             // log.i(this.getProperty("name")+"卡牌onPrepare");
             // _.each(this.deck,(card)=>{
             //    // card.onPrepare();
