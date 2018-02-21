@@ -16,9 +16,7 @@
     /** Detect free variable `module`. */
     var freeModule = freeExports && typeof module == "object" && module && !module.nodeType && module;
 
-    /** Detect the popular CommonJS extension `module.exports`. */
-    var moduleExports = freeModule && freeModule.exports === freeExports;
-
+   
 
     /**
      * 对arr中的每个对象调用funcName函数,并在每个对象都调用完成后调用cb

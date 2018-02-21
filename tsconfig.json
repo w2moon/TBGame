@@ -15,9 +15,7 @@
         "plugins/**/*",
         "wlscript/**/*",
         "ts/Base/**/*",
-        "ts/CmdController.ts",
-        "ts/CmdViewer.ts",
-        "ts/CmdAnimation.ts",
+        "ts/Platform/**/*",
         "ts/main.ts"
     ]
 }

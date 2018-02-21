@@ -1,6 +1,6 @@
 (function(){
-    var mapstrace = require('mapstrace');
-    var path = require('path');
+    var mapstrace = require("mapstrace");
+    var path = require("path");
     var cwd = process.cwd();
     function info(err,module,args){
         mapstrace.build(err,false,function(items){
