@@ -1,4 +1,5 @@
 declare namespace log{
+      
     /**
      * 打印错误信息，必须要处理，不应该出现
      * @param message 消息字符

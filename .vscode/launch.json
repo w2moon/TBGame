@@ -10,6 +10,7 @@
             "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}/ts/main.ts",
+            "cwd": "${workspaceFolder}/js",
             "preLaunchTask": "tsc",
             "console": "integratedTerminal",
             "outFiles": [
