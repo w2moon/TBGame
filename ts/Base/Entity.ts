@@ -1,5 +1,11 @@
 namespace tbgame{
-    
+    const EntityEvent = {
+        PropertySet:"PropertySet",
+        PropertyChanged:"PropertyChanged",
+        TagAdded:"TagAdded",
+        TagRemoved:"TagRemoved",
+
+    };
     /**
      * 标签字典
      */
@@ -43,7 +49,7 @@ namespace tbgame{
             /**
              * 标签增加事件，要避免循环触发
              */
-            this.emit("addTag",tag);
+            this.emit(EntityEvent.TagAdded,tag);
         }
 
         removeTag(tag:string){
@@ -55,7 +61,7 @@ namespace tbgame{
                 /**
                  * 标签减少事件
                  */
-                this.emit("removeTag",tag);
+                this.emit(EntityEvent.TagRemoved,tag);
             }
         }
         //endregion
@@ -63,6 +69,7 @@ namespace tbgame{
         //region 属性
         setProperty(name:string,v:any){
             this.properties[name] = v;
+            this.emit(EntityEvent.PropertySet,name,v);
         }
 
         /**
@@ -77,7 +84,7 @@ namespace tbgame{
             else{
                 this.properties[name] += v;
             }
-            this.emit("changeProperty",name,this.properties[name],v);
+            this.emit(EntityEvent.PropertyChanged,name,this.properties[name],v);
         }
 
 

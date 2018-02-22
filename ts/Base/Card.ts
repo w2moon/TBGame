@@ -1,4 +1,4 @@
-/// <reference path="Entity.ts" />
+
 
 namespace tbgame{
     export enum PlaceType{

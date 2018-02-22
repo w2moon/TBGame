@@ -12,23 +12,23 @@
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.17.4';
+  var VERSION = "4.17.4";
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
 
   /** Error message constants. */
-  var CORE_ERROR_TEXT = 'Unsupported core-js use. Try https://npms.io/search?q=ponyfill.',
-      FUNC_ERROR_TEXT = 'Expected a function';
+  var CORE_ERROR_TEXT = "Unsupported core-js use. Try https://npms.io/search?q=ponyfill.",
+      FUNC_ERROR_TEXT = "Expected a function";
 
   /** Used to stand-in for `undefined` hash values. */
-  var HASH_UNDEFINED = '__lodash_hash_undefined__';
+  var HASH_UNDEFINED = "__lodash_hash_undefined__";
 
   /** Used as the maximum memoize cache size. */
   var MAX_MEMOIZE_SIZE = 500;
 
   /** Used as the internal argument placeholder. */
-  var PLACEHOLDER = '__lodash_placeholder__';
+  var PLACEHOLDER = "__lodash_placeholder__";
 
   /** Used to compose bitmasks for cloning. */
   var CLONE_DEEP_FLAG = 1,
@@ -53,7 +53,7 @@
 
   /** Used as default options for `_.truncate`. */
   var DEFAULT_TRUNC_LENGTH = 30,
-      DEFAULT_TRUNC_OMISSION = '...';
+      DEFAULT_TRUNC_OMISSION = "...";
 
   /** Used to detect hot functions by number of calls within a span of milliseconds. */
   var HOT_COUNT = 800,
@@ -77,52 +77,52 @@
 
   /** Used to associate wrap methods with their bit flags. */
   var wrapFlags = [
-    ['ary', WRAP_ARY_FLAG],
-    ['bind', WRAP_BIND_FLAG],
-    ['bindKey', WRAP_BIND_KEY_FLAG],
-    ['curry', WRAP_CURRY_FLAG],
-    ['curryRight', WRAP_CURRY_RIGHT_FLAG],
-    ['flip', WRAP_FLIP_FLAG],
-    ['partial', WRAP_PARTIAL_FLAG],
-    ['partialRight', WRAP_PARTIAL_RIGHT_FLAG],
-    ['rearg', WRAP_REARG_FLAG]
+    ["ary", WRAP_ARY_FLAG],
+    ["bind", WRAP_BIND_FLAG],
+    ["bindKey", WRAP_BIND_KEY_FLAG],
+    ["curry", WRAP_CURRY_FLAG],
+    ["curryRight", WRAP_CURRY_RIGHT_FLAG],
+    ["flip", WRAP_FLIP_FLAG],
+    ["partial", WRAP_PARTIAL_FLAG],
+    ["partialRight", WRAP_PARTIAL_RIGHT_FLAG],
+    ["rearg", WRAP_REARG_FLAG]
   ];
 
   /** `Object#toString` result references. */
-  var argsTag = '[object Arguments]',
-      arrayTag = '[object Array]',
-      asyncTag = '[object AsyncFunction]',
-      boolTag = '[object Boolean]',
-      dateTag = '[object Date]',
-      domExcTag = '[object DOMException]',
-      errorTag = '[object Error]',
-      funcTag = '[object Function]',
-      genTag = '[object GeneratorFunction]',
-      mapTag = '[object Map]',
-      numberTag = '[object Number]',
-      nullTag = '[object Null]',
-      objectTag = '[object Object]',
-      promiseTag = '[object Promise]',
-      proxyTag = '[object Proxy]',
-      regexpTag = '[object RegExp]',
-      setTag = '[object Set]',
-      stringTag = '[object String]',
-      symbolTag = '[object Symbol]',
-      undefinedTag = '[object Undefined]',
-      weakMapTag = '[object WeakMap]',
-      weakSetTag = '[object WeakSet]';
+  var argsTag = "[object Arguments]",
+      arrayTag = "[object Array]",
+      asyncTag = "[object AsyncFunction]",
+      boolTag = "[object Boolean]",
+      dateTag = "[object Date]",
+      domExcTag = "[object DOMException]",
+      errorTag = "[object Error]",
+      funcTag = "[object Function]",
+      genTag = "[object GeneratorFunction]",
+      mapTag = "[object Map]",
+      numberTag = "[object Number]",
+      nullTag = "[object Null]",
+      objectTag = "[object Object]",
+      promiseTag = "[object Promise]",
+      proxyTag = "[object Proxy]",
+      regexpTag = "[object RegExp]",
+      setTag = "[object Set]",
+      stringTag = "[object String]",
+      symbolTag = "[object Symbol]",
+      undefinedTag = "[object Undefined]",
+      weakMapTag = "[object WeakMap]",
+      weakSetTag = "[object WeakSet]";
 
-  var arrayBufferTag = '[object ArrayBuffer]',
-      dataViewTag = '[object DataView]',
-      float32Tag = '[object Float32Array]',
-      float64Tag = '[object Float64Array]',
-      int8Tag = '[object Int8Array]',
-      int16Tag = '[object Int16Array]',
-      int32Tag = '[object Int32Array]',
-      uint8Tag = '[object Uint8Array]',
-      uint8ClampedTag = '[object Uint8ClampedArray]',
-      uint16Tag = '[object Uint16Array]',
-      uint32Tag = '[object Uint32Array]';
+  var arrayBufferTag = "[object ArrayBuffer]",
+      dataViewTag = "[object DataView]",
+      float32Tag = "[object Float32Array]",
+      float64Tag = "[object Float64Array]",
+      int8Tag = "[object Int8Array]",
+      int16Tag = "[object Int16Array]",
+      int32Tag = "[object Int32Array]",
+      uint8Tag = "[object Uint8Array]",
+      uint8ClampedTag = "[object Uint8ClampedArray]",
+      uint16Tag = "[object Uint16Array]",
+      uint32Tag = "[object Uint32Array]";
 
   /** Used to match empty string literals in compiled template source. */
   var reEmptyStringLeading = /\b__p \+= '';/g,
@@ -203,89 +203,89 @@
   var reUnescapedString = /['\n\r\u2028\u2029\\]/g;
 
   /** Used to compose unicode character classes. */
-  var rsAstralRange = '\\ud800-\\udfff',
-      rsComboMarksRange = '\\u0300-\\u036f',
-      reComboHalfMarksRange = '\\ufe20-\\ufe2f',
-      rsComboSymbolsRange = '\\u20d0-\\u20ff',
+  var rsAstralRange = "\\ud800-\\udfff",
+      rsComboMarksRange = "\\u0300-\\u036f",
+      reComboHalfMarksRange = "\\ufe20-\\ufe2f",
+      rsComboSymbolsRange = "\\u20d0-\\u20ff",
       rsComboRange = rsComboMarksRange + reComboHalfMarksRange + rsComboSymbolsRange,
-      rsDingbatRange = '\\u2700-\\u27bf',
-      rsLowerRange = 'a-z\\xdf-\\xf6\\xf8-\\xff',
-      rsMathOpRange = '\\xac\\xb1\\xd7\\xf7',
-      rsNonCharRange = '\\x00-\\x2f\\x3a-\\x40\\x5b-\\x60\\x7b-\\xbf',
-      rsPunctuationRange = '\\u2000-\\u206f',
-      rsSpaceRange = ' \\t\\x0b\\f\\xa0\\ufeff\\n\\r\\u2028\\u2029\\u1680\\u180e\\u2000\\u2001\\u2002\\u2003\\u2004\\u2005\\u2006\\u2007\\u2008\\u2009\\u200a\\u202f\\u205f\\u3000',
-      rsUpperRange = 'A-Z\\xc0-\\xd6\\xd8-\\xde',
-      rsVarRange = '\\ufe0e\\ufe0f',
+      rsDingbatRange = "\\u2700-\\u27bf",
+      rsLowerRange = "a-z\\xdf-\\xf6\\xf8-\\xff",
+      rsMathOpRange = "\\xac\\xb1\\xd7\\xf7",
+      rsNonCharRange = "\\x00-\\x2f\\x3a-\\x40\\x5b-\\x60\\x7b-\\xbf",
+      rsPunctuationRange = "\\u2000-\\u206f",
+      rsSpaceRange = " \\t\\x0b\\f\\xa0\\ufeff\\n\\r\\u2028\\u2029\\u1680\\u180e\\u2000\\u2001\\u2002\\u2003\\u2004\\u2005\\u2006\\u2007\\u2008\\u2009\\u200a\\u202f\\u205f\\u3000",
+      rsUpperRange = "A-Z\\xc0-\\xd6\\xd8-\\xde",
+      rsVarRange = "\\ufe0e\\ufe0f",
       rsBreakRange = rsMathOpRange + rsNonCharRange + rsPunctuationRange + rsSpaceRange;
 
   /** Used to compose unicode capture groups. */
   var rsApos = "['\u2019]",
-      rsAstral = '[' + rsAstralRange + ']',
-      rsBreak = '[' + rsBreakRange + ']',
-      rsCombo = '[' + rsComboRange + ']',
-      rsDigits = '\\d+',
-      rsDingbat = '[' + rsDingbatRange + ']',
-      rsLower = '[' + rsLowerRange + ']',
-      rsMisc = '[^' + rsAstralRange + rsBreakRange + rsDigits + rsDingbatRange + rsLowerRange + rsUpperRange + ']',
-      rsFitz = '\\ud83c[\\udffb-\\udfff]',
-      rsModifier = '(?:' + rsCombo + '|' + rsFitz + ')',
-      rsNonAstral = '[^' + rsAstralRange + ']',
-      rsRegional = '(?:\\ud83c[\\udde6-\\uddff]){2}',
-      rsSurrPair = '[\\ud800-\\udbff][\\udc00-\\udfff]',
-      rsUpper = '[' + rsUpperRange + ']',
-      rsZWJ = '\\u200d';
+      rsAstral = "[" + rsAstralRange + "]",
+      rsBreak = "[" + rsBreakRange + "]",
+      rsCombo = "[" + rsComboRange + "]",
+      rsDigits = "\\d+",
+      rsDingbat = "[" + rsDingbatRange + "]",
+      rsLower = "[" + rsLowerRange + "]",
+      rsMisc = "[^" + rsAstralRange + rsBreakRange + rsDigits + rsDingbatRange + rsLowerRange + rsUpperRange + "]",
+      rsFitz = "\\ud83c[\\udffb-\\udfff]",
+      rsModifier = "(?:" + rsCombo + "|" + rsFitz + ")",
+      rsNonAstral = "[^" + rsAstralRange + "]",
+      rsRegional = "(?:\\ud83c[\\udde6-\\uddff]){2}",
+      rsSurrPair = "[\\ud800-\\udbff][\\udc00-\\udfff]",
+      rsUpper = "[" + rsUpperRange + "]",
+      rsZWJ = "\\u200d";
 
   /** Used to compose unicode regexes. */
-  var rsMiscLower = '(?:' + rsLower + '|' + rsMisc + ')',
-      rsMiscUpper = '(?:' + rsUpper + '|' + rsMisc + ')',
-      rsOptContrLower = '(?:' + rsApos + '(?:d|ll|m|re|s|t|ve))?',
-      rsOptContrUpper = '(?:' + rsApos + '(?:D|LL|M|RE|S|T|VE))?',
-      reOptMod = rsModifier + '?',
-      rsOptVar = '[' + rsVarRange + ']?',
-      rsOptJoin = '(?:' + rsZWJ + '(?:' + [rsNonAstral, rsRegional, rsSurrPair].join('|') + ')' + rsOptVar + reOptMod + ')*',
-      rsOrdLower = '\\d*(?:(?:1st|2nd|3rd|(?![123])\\dth)\\b)',
-      rsOrdUpper = '\\d*(?:(?:1ST|2ND|3RD|(?![123])\\dTH)\\b)',
+  var rsMiscLower = "(?:" + rsLower + "|" + rsMisc + ")",
+      rsMiscUpper = "(?:" + rsUpper + "|" + rsMisc + ")",
+      rsOptContrLower = "(?:" + rsApos + "(?:d|ll|m|re|s|t|ve))?",
+      rsOptContrUpper = "(?:" + rsApos + "(?:D|LL|M|RE|S|T|VE))?",
+      reOptMod = rsModifier + "?",
+      rsOptVar = "[" + rsVarRange + "]?",
+      rsOptJoin = "(?:" + rsZWJ + "(?:" + [rsNonAstral, rsRegional, rsSurrPair].join("|") + ")" + rsOptVar + reOptMod + ")*",
+      rsOrdLower = "\\d*(?:(?:1st|2nd|3rd|(?![123])\\dth)\\b)",
+      rsOrdUpper = "\\d*(?:(?:1ST|2ND|3RD|(?![123])\\dTH)\\b)",
       rsSeq = rsOptVar + reOptMod + rsOptJoin,
-      rsEmoji = '(?:' + [rsDingbat, rsRegional, rsSurrPair].join('|') + ')' + rsSeq,
-      rsSymbol = '(?:' + [rsNonAstral + rsCombo + '?', rsCombo, rsRegional, rsSurrPair, rsAstral].join('|') + ')';
+      rsEmoji = "(?:" + [rsDingbat, rsRegional, rsSurrPair].join("|") + ")" + rsSeq,
+      rsSymbol = "(?:" + [rsNonAstral + rsCombo + "?", rsCombo, rsRegional, rsSurrPair, rsAstral].join("|") + ")";
 
   /** Used to match apostrophes. */
-  var reApos = RegExp(rsApos, 'g');
+  var reApos = RegExp(rsApos, "g");
 
   /**
    * Used to match [combining diacritical marks](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks) and
    * [combining diacritical marks for symbols](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks_for_Symbols).
    */
-  var reComboMark = RegExp(rsCombo, 'g');
+  var reComboMark = RegExp(rsCombo, "g");
 
   /** Used to match [string symbols](https://mathiasbynens.be/notes/javascript-unicode). */
-  var reUnicode = RegExp(rsFitz + '(?=' + rsFitz + ')|' + rsSymbol + rsSeq, 'g');
+  var reUnicode = RegExp(rsFitz + "(?=" + rsFitz + ")|" + rsSymbol + rsSeq, "g");
 
   /** Used to match complex or compound words. */
   var reUnicodeWord = RegExp([
-    rsUpper + '?' + rsLower + '+' + rsOptContrLower + '(?=' + [rsBreak, rsUpper, '$'].join('|') + ')',
-    rsMiscUpper + '+' + rsOptContrUpper + '(?=' + [rsBreak, rsUpper + rsMiscLower, '$'].join('|') + ')',
-    rsUpper + '?' + rsMiscLower + '+' + rsOptContrLower,
-    rsUpper + '+' + rsOptContrUpper,
+    rsUpper + "?" + rsLower + "+" + rsOptContrLower + "(?=" + [rsBreak, rsUpper, "$"].join("|") + ")",
+    rsMiscUpper + "+" + rsOptContrUpper + "(?=" + [rsBreak, rsUpper + rsMiscLower, "$"].join("|") + ")",
+    rsUpper + "?" + rsMiscLower + "+" + rsOptContrLower,
+    rsUpper + "+" + rsOptContrUpper,
     rsOrdUpper,
     rsOrdLower,
     rsDigits,
     rsEmoji
-  ].join('|'), 'g');
+  ].join("|"), "g");
 
   /** Used to detect strings with [zero-width joiners or code points from the astral planes](http://eev.ee/blog/2015/09/12/dark-corners-of-unicode/). */
-  var reHasUnicode = RegExp('[' + rsZWJ + rsAstralRange  + rsComboRange + rsVarRange + ']');
+  var reHasUnicode = RegExp("[" + rsZWJ + rsAstralRange  + rsComboRange + rsVarRange + "]");
 
   /** Used to detect strings that need a more robust regexp to match words. */
   var reHasUnicodeWord = /[a-z][A-Z]|[A-Z]{2,}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/;
 
   /** Used to assign default `context` object properties. */
   var contextProps = [
-    'Array', 'Buffer', 'DataView', 'Date', 'Error', 'Float32Array', 'Float64Array',
-    'Function', 'Int8Array', 'Int16Array', 'Int32Array', 'Map', 'Math', 'Object',
-    'Promise', 'RegExp', 'Set', 'String', 'Symbol', 'TypeError', 'Uint8Array',
-    'Uint8ClampedArray', 'Uint16Array', 'Uint32Array', 'WeakMap',
-    '_', 'clearTimeout', 'isFinite', 'parseInt', 'setTimeout'
+    "Array", "Buffer", "DataView", "Date", "Error", "Float32Array", "Float64Array",
+    "Function", "Int8Array", "Int16Array", "Int32Array", "Map", "Math", "Object",
+    "Promise", "RegExp", "Set", "String", "Symbol", "TypeError", "Uint8Array",
+    "Uint8ClampedArray", "Uint16Array", "Uint32Array", "WeakMap",
+    "_", "clearTimeout", "isFinite", "parseInt", "setTimeout"
   ];
 
   /** Used to make template sourceURLs easier to identify. */
@@ -326,87 +326,87 @@
   /** Used to map Latin Unicode letters to basic Latin letters. */
   var deburredLetters = {
     // Latin-1 Supplement block.
-    '\xc0': 'A',  '\xc1': 'A', '\xc2': 'A', '\xc3': 'A', '\xc4': 'A', '\xc5': 'A',
-    '\xe0': 'a',  '\xe1': 'a', '\xe2': 'a', '\xe3': 'a', '\xe4': 'a', '\xe5': 'a',
-    '\xc7': 'C',  '\xe7': 'c',
-    '\xd0': 'D',  '\xf0': 'd',
-    '\xc8': 'E',  '\xc9': 'E', '\xca': 'E', '\xcb': 'E',
-    '\xe8': 'e',  '\xe9': 'e', '\xea': 'e', '\xeb': 'e',
-    '\xcc': 'I',  '\xcd': 'I', '\xce': 'I', '\xcf': 'I',
-    '\xec': 'i',  '\xed': 'i', '\xee': 'i', '\xef': 'i',
-    '\xd1': 'N',  '\xf1': 'n',
-    '\xd2': 'O',  '\xd3': 'O', '\xd4': 'O', '\xd5': 'O', '\xd6': 'O', '\xd8': 'O',
-    '\xf2': 'o',  '\xf3': 'o', '\xf4': 'o', '\xf5': 'o', '\xf6': 'o', '\xf8': 'o',
-    '\xd9': 'U',  '\xda': 'U', '\xdb': 'U', '\xdc': 'U',
-    '\xf9': 'u',  '\xfa': 'u', '\xfb': 'u', '\xfc': 'u',
-    '\xdd': 'Y',  '\xfd': 'y', '\xff': 'y',
-    '\xc6': 'Ae', '\xe6': 'ae',
-    '\xde': 'Th', '\xfe': 'th',
-    '\xdf': 'ss',
+    "\xc0": "A",  "\xc1": "A", "\xc2": "A", "\xc3": "A", "\xc4": "A", "\xc5": "A",
+    "\xe0": "a",  "\xe1": "a", "\xe2": "a", "\xe3": "a", "\xe4": "a", "\xe5": "a",
+    "\xc7": "C",  "\xe7": "c",
+    "\xd0": "D",  "\xf0": "d",
+    "\xc8": "E",  "\xc9": "E", "\xca": "E", "\xcb": "E",
+    "\xe8": "e",  "\xe9": "e", "\xea": "e", "\xeb": "e",
+    "\xcc": "I",  "\xcd": "I", "\xce": "I", "\xcf": "I",
+    "\xec": "i",  "\xed": "i", "\xee": "i", "\xef": "i",
+    "\xd1": "N",  "\xf1": "n",
+    "\xd2": "O",  "\xd3": "O", "\xd4": "O", "\xd5": "O", "\xd6": "O", "\xd8": "O",
+    "\xf2": "o",  "\xf3": "o", "\xf4": "o", "\xf5": "o", "\xf6": "o", "\xf8": "o",
+    "\xd9": "U",  "\xda": "U", "\xdb": "U", "\xdc": "U",
+    "\xf9": "u",  "\xfa": "u", "\xfb": "u", "\xfc": "u",
+    "\xdd": "Y",  "\xfd": "y", "\xff": "y",
+    "\xc6": "Ae", "\xe6": "ae",
+    "\xde": "Th", "\xfe": "th",
+    "\xdf": "ss",
     // Latin Extended-A block.
-    '\u0100': 'A',  '\u0102': 'A', '\u0104': 'A',
-    '\u0101': 'a',  '\u0103': 'a', '\u0105': 'a',
-    '\u0106': 'C',  '\u0108': 'C', '\u010a': 'C', '\u010c': 'C',
-    '\u0107': 'c',  '\u0109': 'c', '\u010b': 'c', '\u010d': 'c',
-    '\u010e': 'D',  '\u0110': 'D', '\u010f': 'd', '\u0111': 'd',
-    '\u0112': 'E',  '\u0114': 'E', '\u0116': 'E', '\u0118': 'E', '\u011a': 'E',
-    '\u0113': 'e',  '\u0115': 'e', '\u0117': 'e', '\u0119': 'e', '\u011b': 'e',
-    '\u011c': 'G',  '\u011e': 'G', '\u0120': 'G', '\u0122': 'G',
-    '\u011d': 'g',  '\u011f': 'g', '\u0121': 'g', '\u0123': 'g',
-    '\u0124': 'H',  '\u0126': 'H', '\u0125': 'h', '\u0127': 'h',
-    '\u0128': 'I',  '\u012a': 'I', '\u012c': 'I', '\u012e': 'I', '\u0130': 'I',
-    '\u0129': 'i',  '\u012b': 'i', '\u012d': 'i', '\u012f': 'i', '\u0131': 'i',
-    '\u0134': 'J',  '\u0135': 'j',
-    '\u0136': 'K',  '\u0137': 'k', '\u0138': 'k',
-    '\u0139': 'L',  '\u013b': 'L', '\u013d': 'L', '\u013f': 'L', '\u0141': 'L',
-    '\u013a': 'l',  '\u013c': 'l', '\u013e': 'l', '\u0140': 'l', '\u0142': 'l',
-    '\u0143': 'N',  '\u0145': 'N', '\u0147': 'N', '\u014a': 'N',
-    '\u0144': 'n',  '\u0146': 'n', '\u0148': 'n', '\u014b': 'n',
-    '\u014c': 'O',  '\u014e': 'O', '\u0150': 'O',
-    '\u014d': 'o',  '\u014f': 'o', '\u0151': 'o',
-    '\u0154': 'R',  '\u0156': 'R', '\u0158': 'R',
-    '\u0155': 'r',  '\u0157': 'r', '\u0159': 'r',
-    '\u015a': 'S',  '\u015c': 'S', '\u015e': 'S', '\u0160': 'S',
-    '\u015b': 's',  '\u015d': 's', '\u015f': 's', '\u0161': 's',
-    '\u0162': 'T',  '\u0164': 'T', '\u0166': 'T',
-    '\u0163': 't',  '\u0165': 't', '\u0167': 't',
-    '\u0168': 'U',  '\u016a': 'U', '\u016c': 'U', '\u016e': 'U', '\u0170': 'U', '\u0172': 'U',
-    '\u0169': 'u',  '\u016b': 'u', '\u016d': 'u', '\u016f': 'u', '\u0171': 'u', '\u0173': 'u',
-    '\u0174': 'W',  '\u0175': 'w',
-    '\u0176': 'Y',  '\u0177': 'y', '\u0178': 'Y',
-    '\u0179': 'Z',  '\u017b': 'Z', '\u017d': 'Z',
-    '\u017a': 'z',  '\u017c': 'z', '\u017e': 'z',
-    '\u0132': 'IJ', '\u0133': 'ij',
-    '\u0152': 'Oe', '\u0153': 'oe',
-    '\u0149': "'n", '\u017f': 's'
+    "\u0100": "A",  "\u0102": "A", "\u0104": "A",
+    "\u0101": "a",  "\u0103": "a", "\u0105": "a",
+    "\u0106": "C",  "\u0108": "C", "\u010a": "C", "\u010c": "C",
+    "\u0107": "c",  "\u0109": "c", "\u010b": "c", "\u010d": "c",
+    "\u010e": "D",  "\u0110": "D", "\u010f": "d", "\u0111": "d",
+    "\u0112": "E",  "\u0114": "E", "\u0116": "E", "\u0118": "E", "\u011a": "E",
+    "\u0113": "e",  "\u0115": "e", "\u0117": "e", "\u0119": "e", "\u011b": "e",
+    "\u011c": "G",  "\u011e": "G", "\u0120": "G", "\u0122": "G",
+    "\u011d": "g",  "\u011f": "g", "\u0121": "g", "\u0123": "g",
+    "\u0124": "H",  "\u0126": "H", "\u0125": "h", "\u0127": "h",
+    "\u0128": "I",  "\u012a": "I", "\u012c": "I", "\u012e": "I", "\u0130": "I",
+    "\u0129": "i",  "\u012b": "i", "\u012d": "i", "\u012f": "i", "\u0131": "i",
+    "\u0134": "J",  "\u0135": "j",
+    "\u0136": "K",  "\u0137": "k", "\u0138": "k",
+    "\u0139": "L",  "\u013b": "L", "\u013d": "L", "\u013f": "L", "\u0141": "L",
+    "\u013a": "l",  "\u013c": "l", "\u013e": "l", "\u0140": "l", "\u0142": "l",
+    "\u0143": "N",  "\u0145": "N", "\u0147": "N", "\u014a": "N",
+    "\u0144": "n",  "\u0146": "n", "\u0148": "n", "\u014b": "n",
+    "\u014c": "O",  "\u014e": "O", "\u0150": "O",
+    "\u014d": "o",  "\u014f": "o", "\u0151": "o",
+    "\u0154": "R",  "\u0156": "R", "\u0158": "R",
+    "\u0155": "r",  "\u0157": "r", "\u0159": "r",
+    "\u015a": "S",  "\u015c": "S", "\u015e": "S", "\u0160": "S",
+    "\u015b": "s",  "\u015d": "s", "\u015f": "s", "\u0161": "s",
+    "\u0162": "T",  "\u0164": "T", "\u0166": "T",
+    "\u0163": "t",  "\u0165": "t", "\u0167": "t",
+    "\u0168": "U",  "\u016a": "U", "\u016c": "U", "\u016e": "U", "\u0170": "U", "\u0172": "U",
+    "\u0169": "u",  "\u016b": "u", "\u016d": "u", "\u016f": "u", "\u0171": "u", "\u0173": "u",
+    "\u0174": "W",  "\u0175": "w",
+    "\u0176": "Y",  "\u0177": "y", "\u0178": "Y",
+    "\u0179": "Z",  "\u017b": "Z", "\u017d": "Z",
+    "\u017a": "z",  "\u017c": "z", "\u017e": "z",
+    "\u0132": "IJ", "\u0133": "ij",
+    "\u0152": "Oe", "\u0153": "oe",
+    "\u0149": "'n", "\u017f": "s"
   };
 
   /** Used to map characters to HTML entities. */
   var htmlEscapes = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#39;'
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "\"": "&quot;",
+    "'": "&#39;"
   };
 
   /** Used to map HTML entities to characters. */
   var htmlUnescapes = {
-    '&amp;': '&',
-    '&lt;': '<',
-    '&gt;': '>',
-    '&quot;': '"',
-    '&#39;': "'"
+    "&amp;": "&",
+    "&lt;": "<",
+    "&gt;": ">",
+    "&quot;": "\"",
+    "&#39;": "'"
   };
 
   /** Used to escape characters for inclusion in compiled string literals. */
   var stringEscapes = {
-    '\\': '\\',
+    "\\": "\\",
     "'": "'",
-    '\n': 'n',
-    '\r': 'r',
-    '\u2028': 'u2028',
-    '\u2029': 'u2029'
+    "\n": "n",
+    "\r": "r",
+    "\u2028": "u2028",
+    "\u2029": "u2029"
   };
 
   /** Built-in method references without a dependency on `root`. */
@@ -414,19 +414,19 @@
       freeParseInt = parseInt;
 
   /** Detect free variable `global` from Node.js. */
-  var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
+  var freeGlobal = typeof global == "object" && global && global.Object === Object && global;
 
   /** Detect free variable `self`. */
-  var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+  var freeSelf = typeof self == "object" && self && self.Object === Object && self;
 
   /** Used as a reference to the global object. */
-  var root = freeGlobal || freeSelf || Function('return this')();
+  var root = freeGlobal || freeSelf || Function("return this")();
 
   /** Detect free variable `exports`. */
-  var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
+  var freeExports = typeof exports == "object" && exports && !exports.nodeType && exports;
 
   /** Detect free variable `module`. */
-  var freeModule = freeExports && typeof module == 'object' && module && !module.nodeType && module;
+  var freeModule = freeExports && typeof module == "object" && module && !module.nodeType && module;
 
   /** Detect the popular CommonJS extension `module.exports`. */
   var moduleExports = freeModule && freeModule.exports === freeExports;
@@ -437,7 +437,7 @@
   /** Used to access faster Node.js helpers. */
   var nodeUtil = (function() {
     try {
-      return freeProcess && freeProcess.binding && freeProcess.binding('util');
+      return freeProcess && freeProcess.binding && freeProcess.binding("util");
     } catch (e) {}
   }());
 
@@ -758,7 +758,7 @@
    * @param {string} string The string inspect.
    * @returns {number} Returns the string size.
    */
-  var asciiSize = baseProperty('length');
+  var asciiSize = baseProperty("length");
 
   /**
    * Converts an ASCII `string` to an array.
@@ -768,7 +768,7 @@
    * @returns {Array} Returns the converted array.
    */
   function asciiToArray(string) {
-    return string.split('');
+    return string.split("");
   }
 
   /**
@@ -1135,7 +1135,7 @@
    * @returns {string} Returns the escaped character.
    */
   function escapeStringChar(chr) {
-    return '\\' + stringEscapes[chr];
+    return "\\" + stringEscapes[chr];
   }
 
   /**
@@ -1444,7 +1444,7 @@
         objectProto = Object.prototype;
 
     /** Used to detect overreaching core-js shims. */
-    var coreJsData = context['__core-js_shared__'];
+    var coreJsData = context["__core-js_shared__"];
 
     /** Used to resolve the decompiled source of functions. */
     var funcToString = funcProto.toString;
@@ -1457,8 +1457,8 @@
 
     /** Used to detect methods masquerading as native. */
     var maskSrcKey = (function() {
-      var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
-      return uid ? ('Symbol(src)_1.' + uid) : '';
+      var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || "");
+      return uid ? ("Symbol(src)_1." + uid) : "";
     }());
 
     /**
@@ -1475,9 +1475,9 @@
     var oldDash = root._;
 
     /** Used to detect if a method is native. */
-    var reIsNative = RegExp('^' +
-      funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
-      .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+    var reIsNative = RegExp("^" +
+      funcToString.call(hasOwnProperty).replace(reRegExpChar, "\\$&")
+      .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, "$1.*?") + "$"
     );
 
     /** Built-in value references. */
@@ -1495,8 +1495,8 @@
 
     var defineProperty = (function() {
       try {
-        var func = getNative(Object, 'defineProperty');
-        func({}, '', {});
+        var func = getNative(Object, "defineProperty");
+        func({}, "", {});
         return func;
       } catch (e) {}
     }());
@@ -1522,12 +1522,12 @@
         nativeReverse = arrayProto.reverse;
 
     /* Built-in method references that are verified to be native. */
-    var DataView = getNative(context, 'DataView'),
-        Map = getNative(context, 'Map'),
-        Promise = getNative(context, 'Promise'),
-        Set = getNative(context, 'Set'),
-        WeakMap = getNative(context, 'WeakMap'),
-        nativeCreate = getNative(Object, 'create');
+    var DataView = getNative(context, "DataView"),
+        Map = getNative(context, "Map"),
+        Promise = getNative(context, "Promise"),
+        Set = getNative(context, "Set"),
+        WeakMap = getNative(context, "WeakMap"),
+        nativeCreate = getNative(Object, "create");
 
     /** Used to store function metadata. */
     var metaMap = WeakMap && new WeakMap;
@@ -1671,7 +1671,7 @@
         if (value instanceof LodashWrapper) {
           return value;
         }
-        if (hasOwnProperty.call(value, '__wrapped__')) {
+        if (hasOwnProperty.call(value, "__wrapped__")) {
           return wrapperClone(value);
         }
       }
@@ -1743,7 +1743,7 @@
        * @memberOf _.templateSettings
        * @type {RegExp}
        */
-      'escape': reEscape,
+      "escape": reEscape,
 
       /**
        * Used to detect code to be evaluated.
@@ -1751,7 +1751,7 @@
        * @memberOf _.templateSettings
        * @type {RegExp}
        */
-      'evaluate': reEvaluate,
+      "evaluate": reEvaluate,
 
       /**
        * Used to detect `data` property values to inject.
@@ -1759,7 +1759,7 @@
        * @memberOf _.templateSettings
        * @type {RegExp}
        */
-      'interpolate': reInterpolate,
+      "interpolate": reInterpolate,
 
       /**
        * Used to reference the data object in the template text.
@@ -1767,7 +1767,7 @@
        * @memberOf _.templateSettings
        * @type {string}
        */
-      'variable': '',
+      "variable": "",
 
       /**
        * Used to import variables into the compiled template.
@@ -1775,7 +1775,7 @@
        * @memberOf _.templateSettings
        * @type {Object}
        */
-      'imports': {
+      "imports": {
 
         /**
          * A reference to the `lodash` function.
@@ -1783,7 +1783,7 @@
          * @memberOf _.templateSettings.imports
          * @type {Function}
          */
-        '_': lodash
+        "_": lodash
       }
     };
 
@@ -2012,7 +2012,7 @@
 
     // Add methods to `Hash`.
     Hash.prototype.clear = hashClear;
-    Hash.prototype['delete'] = hashDelete;
+    Hash.prototype["delete"] = hashDelete;
     Hash.prototype.get = hashGet;
     Hash.prototype.has = hashHas;
     Hash.prototype.set = hashSet;
@@ -2129,7 +2129,7 @@
 
     // Add methods to `ListCache`.
     ListCache.prototype.clear = listCacheClear;
-    ListCache.prototype['delete'] = listCacheDelete;
+    ListCache.prototype["delete"] = listCacheDelete;
     ListCache.prototype.get = listCacheGet;
     ListCache.prototype.has = listCacheHas;
     ListCache.prototype.set = listCacheSet;
@@ -2164,9 +2164,9 @@
     function mapCacheClear() {
       this.size = 0;
       this.__data__ = {
-        'hash': new Hash,
-        'map': new (Map || ListCache),
-        'string': new Hash
+        "hash": new Hash,
+        "map": new (Map || ListCache),
+        "string": new Hash
       };
     }
 
@@ -2180,7 +2180,7 @@
      * @returns {boolean} Returns `true` if the entry was removed, else `false`.
      */
     function mapCacheDelete(key) {
-      var result = getMapData(this, key)['delete'](key);
+      var result = getMapData(this, key)["delete"](key);
       this.size -= result ? 1 : 0;
       return result;
     }
@@ -2232,7 +2232,7 @@
 
     // Add methods to `MapCache`.
     MapCache.prototype.clear = mapCacheClear;
-    MapCache.prototype['delete'] = mapCacheDelete;
+    MapCache.prototype["delete"] = mapCacheDelete;
     MapCache.prototype.get = mapCacheGet;
     MapCache.prototype.has = mapCacheHas;
     MapCache.prototype.set = mapCacheSet;
@@ -2326,7 +2326,7 @@
      */
     function stackDelete(key) {
       var data = this.__data__,
-          result = data['delete'](key);
+          result = data["delete"](key);
 
       this.size = data.size;
       return result;
@@ -2386,7 +2386,7 @@
 
     // Add methods to `Stack`.
     Stack.prototype.clear = stackClear;
-    Stack.prototype['delete'] = stackDelete;
+    Stack.prototype["delete"] = stackDelete;
     Stack.prototype.get = stackGet;
     Stack.prototype.has = stackHas;
     Stack.prototype.set = stackSet;
@@ -2414,11 +2414,11 @@
         if ((inherited || hasOwnProperty.call(value, key)) &&
             !(skipIndexes && (
                // Safari 9 has enumerable `arguments.length` in strict mode.
-               key == 'length' ||
+               key == "length" ||
                // Node.js 0.10 has enumerable non-index properties on buffers.
-               (isBuff && (key == 'offset' || key == 'parent')) ||
+               (isBuff && (key == "offset" || key == "parent")) ||
                // PhantomJS 2 has enumerable non-index properties on typed arrays.
-               (isType && (key == 'buffer' || key == 'byteLength' || key == 'byteOffset')) ||
+               (isType && (key == "buffer" || key == "byteLength" || key == "byteOffset")) ||
                // Skip index properties.
                isIndex(key, length)
             ))) {
@@ -2569,12 +2569,12 @@
      * @param {*} value The value to assign.
      */
     function baseAssignValue(object, key, value) {
-      if (key == '__proto__' && defineProperty) {
+      if (key == "__proto__" && defineProperty) {
         defineProperty(object, key, {
-          'configurable': true,
-          'enumerable': true,
-          'value': value,
-          'writable': true
+          "configurable": true,
+          "enumerable": true,
+          "value": value,
+          "writable": true
         });
       } else {
         object[key] = value;
@@ -2755,7 +2755,7 @@
      * @returns {number|Object} Returns the timer id or timeout object.
      */
     function baseDelay(func, wait, args) {
-      if (typeof func != 'function') {
+      if (typeof func != "function") {
         throw new TypeError(FUNC_ERROR_TEXT);
       }
       return setTimeout(function() { func.apply(undefined, args); }, wait);
@@ -3326,8 +3326,8 @@
           : equalByTag(object, other, objTag, bitmask, customizer, equalFunc, stack);
       }
       if (!(bitmask & COMPARE_PARTIAL_FLAG)) {
-        var objIsWrapped = objIsObj && hasOwnProperty.call(object, '__wrapped__'),
-            othIsWrapped = othIsObj && hasOwnProperty.call(other, '__wrapped__');
+        var objIsWrapped = objIsObj && hasOwnProperty.call(object, "__wrapped__"),
+            othIsWrapped = othIsObj && hasOwnProperty.call(other, "__wrapped__");
 
         if (objIsWrapped || othIsWrapped) {
           var objUnwrapped = objIsWrapped ? object.value() : object,
@@ -3469,13 +3469,13 @@
     function baseIteratee(value) {
       // Don't store the `typeof` result in a variable to avoid a JIT bug in Safari 9.
       // See https://bugs.webkit.org/show_bug.cgi?id=156034 for more details.
-      if (typeof value == 'function') {
+      if (typeof value == "function") {
         return value;
       }
       if (value == null) {
         return identity;
       }
-      if (typeof value == 'object') {
+      if (typeof value == "object") {
         return isArray(value)
           ? baseMatchesProperty(value[0], value[1])
           : baseMatches(value);
@@ -3496,7 +3496,7 @@
       }
       var result = [];
       for (var key in Object(object)) {
-        if (hasOwnProperty.call(object, key) && key != 'constructor') {
+        if (hasOwnProperty.call(object, key) && key != "constructor") {
           result.push(key);
         }
       }
@@ -3518,7 +3518,7 @@
           result = [];
 
       for (var key in object) {
-        if (!(key == 'constructor' && (isProto || !hasOwnProperty.call(object, key)))) {
+        if (!(key == "constructor" && (isProto || !hasOwnProperty.call(object, key)))) {
           result.push(key);
         }
       }
@@ -3615,7 +3615,7 @@
         }
         else {
           var newValue = customizer
-            ? customizer(object[key], srcValue, (key + ''), object, source, stack)
+            ? customizer(object[key], srcValue, (key + ""), object, source, stack)
             : undefined;
 
           if (newValue === undefined) {
@@ -3651,7 +3651,7 @@
         return;
       }
       var newValue = customizer
-        ? customizer(objValue, srcValue, (key + ''), object, source, stack)
+        ? customizer(objValue, srcValue, (key + ""), object, source, stack)
         : undefined;
 
       var isCommon = newValue === undefined;
@@ -3698,7 +3698,7 @@
         // Recursively merge objects and arrays (susceptible to call stack limits).
         stack.set(srcValue, newValue);
         mergeFunc(newValue, srcValue, srcIndex, customizer, stack);
-        stack['delete'](srcValue);
+        stack["delete"](srcValue);
       }
       assignMergeValue(object, key, newValue);
     }
@@ -3737,7 +3737,7 @@
         var criteria = arrayMap(iteratees, function(iteratee) {
           return iteratee(value);
         });
-        return { 'criteria': criteria, 'index': ++index, 'value': value };
+        return { "criteria": criteria, "index": ++index, "value": value };
       });
 
       return baseSortBy(result, function(object, other) {
@@ -3908,7 +3908,7 @@
      * @returns {string} Returns the repeated string.
      */
     function baseRepeat(string, n) {
-      var result = '';
+      var result = "";
       if (!string || n < 1 || n > MAX_SAFE_INTEGER) {
         return result;
       }
@@ -3936,7 +3936,7 @@
      * @returns {Function} Returns the new function.
      */
     function baseRest(func, start) {
-      return setToString(overRest(func, start, identity), func + '');
+      return setToString(overRest(func, start, identity), func + "");
     }
 
     /**
@@ -4025,11 +4025,11 @@
      * @returns {Function} Returns `func`.
      */
     var baseSetToString = !defineProperty ? identity : function(func, string) {
-      return defineProperty(func, 'toString', {
-        'configurable': true,
-        'enumerable': false,
-        'value': constant(string),
-        'writable': true
+      return defineProperty(func, "toString", {
+        "configurable": true,
+        "enumerable": false,
+        "value": constant(string),
+        "writable": true
       });
     };
 
@@ -4109,7 +4109,7 @@
       var low = 0,
           high = array == null ? low : array.length;
 
-      if (typeof value == 'number' && value === value && high <= HALF_MAX_ARRAY_LENGTH) {
+      if (typeof value == "number" && value === value && high <= HALF_MAX_ARRAY_LENGTH) {
         while (low < high) {
           var mid = (low + high) >>> 1,
               computed = array[mid];
@@ -4215,7 +4215,7 @@
      * @returns {number} Returns the number.
      */
     function baseToNumber(value) {
-      if (typeof value == 'number') {
+      if (typeof value == "number") {
         return value;
       }
       if (isSymbol(value)) {
@@ -4234,18 +4234,18 @@
      */
     function baseToString(value) {
       // Exit early for strings to avoid a performance hit in some environments.
-      if (typeof value == 'string') {
+      if (typeof value == "string") {
         return value;
       }
       if (isArray(value)) {
         // Recursively convert values (susceptible to call stack limits).
-        return arrayMap(value, baseToString) + '';
+        return arrayMap(value, baseToString) + "";
       }
       if (isSymbol(value)) {
-        return symbolToString ? symbolToString.call(value) : '';
+        return symbolToString ? symbolToString.call(value) : "";
       }
-      var result = (value + '');
-      return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
+      var result = (value + "");
+      return (result == "0" && (1 / value) == -INFINITY) ? "-0" : result;
     }
 
     /**
@@ -4452,7 +4452,7 @@
      * @returns {Function} Returns cast function.
      */
     function castFunction(value) {
-      return typeof value == 'function' ? value : identity;
+      return typeof value == "function" ? value : identity;
     }
 
     /**
@@ -4682,7 +4682,7 @@
             return result;
           }
           var order = orders[index];
-          return result * (order == 'desc' ? -1 : 1);
+          return result * (order == "desc" ? -1 : 1);
         }
       }
       // Fixes an `Array#sort` bug in the JS engine embedded in Adobe applications
@@ -4877,7 +4877,7 @@
             customizer = length > 1 ? sources[length - 1] : undefined,
             guard = length > 2 ? sources[2] : undefined;
 
-        customizer = (assigner.length > 3 && typeof customizer == 'function')
+        customizer = (assigner.length > 3 && typeof customizer == "function")
           ? (length--, customizer)
           : undefined;
 
@@ -4990,7 +4990,7 @@
           : string.charAt(0);
 
         var trailing = strSymbols
-          ? castSlice(strSymbols, 1).join('')
+          ? castSlice(strSymbols, 1).join("")
           : string.slice(1);
 
         return chr[methodName]() + trailing;
@@ -5006,7 +5006,7 @@
      */
     function createCompounder(callback) {
       return function(string) {
-        return arrayReduce(words(deburr(string).replace(reApos, '')), callback, '');
+        return arrayReduce(words(deburr(string).replace(reApos, "")), callback, "");
       };
     }
 
@@ -5118,10 +5118,10 @@
         }
         while (index--) {
           var func = funcs[index];
-          if (typeof func != 'function') {
+          if (typeof func != "function") {
             throw new TypeError(FUNC_ERROR_TEXT);
           }
-          if (prereq && !wrapper && getFuncName(func) == 'wrapper') {
+          if (prereq && !wrapper && getFuncName(func) == "wrapper") {
             var wrapper = new LodashWrapper([], true);
           }
         }
@@ -5130,7 +5130,7 @@
           func = funcs[index];
 
           var funcName = getFuncName(func),
-              data = funcName == 'wrapper' ? getData(func) : undefined;
+              data = funcName == "wrapper" ? getData(func) : undefined;
 
           if (data && isLaziable(data[0]) &&
                 data[1] == (WRAP_ARY_FLAG | WRAP_CURRY_FLAG | WRAP_PARTIAL_FLAG | WRAP_REARG_FLAG) &&
@@ -5269,7 +5269,7 @@
           if (result === undefined) {
             return other;
           }
-          if (typeof value == 'string' || typeof other == 'string') {
+          if (typeof value == "string" || typeof other == "string") {
             value = baseToString(value);
             other = baseToString(other);
           } else {
@@ -5311,7 +5311,7 @@
      * @returns {string} Returns the padding for `string`.
      */
     function createPadding(length, chars) {
-      chars = chars === undefined ? ' ' : baseToString(chars);
+      chars = chars === undefined ? " " : baseToString(chars);
 
       var charsLength = chars.length;
       if (charsLength < 2) {
@@ -5319,7 +5319,7 @@
       }
       var result = baseRepeat(chars, nativeCeil(length / stringSize(chars)));
       return hasUnicode(chars)
-        ? castSlice(stringToArray(result), 0, length).join('')
+        ? castSlice(stringToArray(result), 0, length).join("")
         : result.slice(0, length);
     }
 
@@ -5367,7 +5367,7 @@
      */
     function createRange(fromRight) {
       return function(start, end, step) {
-        if (step && typeof step != 'number' && isIterateeCall(start, end, step)) {
+        if (step && typeof step != "number" && isIterateeCall(start, end, step)) {
           end = step = undefined;
         }
         // Ensure the sign of `-0` is preserved.
@@ -5392,7 +5392,7 @@
      */
     function createRelationalOperation(operator) {
       return function(value, other) {
-        if (!(typeof value == 'string' && typeof other == 'string')) {
+        if (!(typeof value == "string" && typeof other == "string")) {
           value = toNumber(value);
           other = toNumber(other);
         }
@@ -5458,11 +5458,11 @@
         if (precision) {
           // Shift with exponential notation to avoid floating-point issues.
           // See [MDN](https://mdn.io/round#Examples) for more details.
-          var pair = (toString(number) + 'e').split('e'),
-              value = func(pair[0] + 'e' + (+pair[1] + precision));
+          var pair = (toString(number) + "e").split("e"),
+              value = func(pair[0] + "e" + (+pair[1] + precision));
 
-          pair = (toString(value) + 'e').split('e');
-          return +(pair[0] + 'e' + (+pair[1] - precision));
+          pair = (toString(value) + "e").split("e");
+          return +(pair[0] + "e" + (+pair[1] - precision));
         }
         return func(number);
       };
@@ -5526,7 +5526,7 @@
      */
     function createWrap(func, bitmask, thisArg, partials, holders, argPos, ary, arity) {
       var isBindKey = bitmask & WRAP_BIND_KEY_FLAG;
-      if (!isBindKey && typeof func != 'function') {
+      if (!isBindKey && typeof func != "function") {
         throw new TypeError(FUNC_ERROR_TEXT);
       }
       var length = partials ? partials.length : 0;
@@ -5618,7 +5618,7 @@
         // Recursively merge objects and arrays (susceptible to call stack limits).
         stack.set(srcValue, objValue);
         baseMerge(objValue, srcValue, undefined, customDefaultsMerge, stack);
-        stack['delete'](srcValue);
+        stack["delete"](srcValue);
       }
       return objValue;
     }
@@ -5705,8 +5705,8 @@
           break;
         }
       }
-      stack['delete'](array);
-      stack['delete'](other);
+      stack["delete"](array);
+      stack["delete"](other);
       return result;
     }
 
@@ -5759,7 +5759,7 @@
           // Coerce regexes to strings and treat strings, primitives and objects,
           // as equal. See http://www.ecma-international.org/ecma-262/7.0/#sec-regexp.prototype.tostring
           // for more details.
-          return object == (other + '');
+          return object == (other + "");
 
         case mapTag:
           var convert = mapToArray;
@@ -5781,7 +5781,7 @@
           // Recursively compare objects (susceptible to call stack limits).
           stack.set(object, other);
           var result = equalArrays(convert(object), convert(other), bitmask, customizer, equalFunc, stack);
-          stack['delete'](object);
+          stack["delete"](object);
           return result;
 
         case symbolTag:
@@ -5850,7 +5850,7 @@
           result = false;
           break;
         }
-        skipCtor || (skipCtor = key == 'constructor');
+        skipCtor || (skipCtor = key == "constructor");
       }
       if (result && !skipCtor) {
         var objCtor = object.constructor,
@@ -5858,14 +5858,14 @@
 
         // Non `Object` object instances with different constructors are not equal.
         if (objCtor != othCtor &&
-            ('constructor' in object && 'constructor' in other) &&
-            !(typeof objCtor == 'function' && objCtor instanceof objCtor &&
-              typeof othCtor == 'function' && othCtor instanceof othCtor)) {
+            ("constructor" in object && "constructor" in other) &&
+            !(typeof objCtor == "function" && objCtor instanceof objCtor &&
+              typeof othCtor == "function" && othCtor instanceof othCtor)) {
           result = false;
         }
       }
-      stack['delete'](object);
-      stack['delete'](other);
+      stack["delete"](object);
+      stack["delete"](other);
       return result;
     }
 
@@ -5877,7 +5877,7 @@
      * @returns {Function} Returns the new function.
      */
     function flatRest(func) {
-      return setToString(overRest(func, undefined, flatten), func + '');
+      return setToString(overRest(func, undefined, flatten), func + "");
     }
 
     /**
@@ -5922,7 +5922,7 @@
      * @returns {string} Returns the function name.
      */
     function getFuncName(func) {
-      var result = (func.name + ''),
+      var result = (func.name + ""),
           array = realNames[result],
           length = hasOwnProperty.call(realNames, result) ? array.length : 0;
 
@@ -5944,7 +5944,7 @@
      * @returns {*} Returns the placeholder value.
      */
     function getHolder(func) {
-      var object = hasOwnProperty.call(lodash, 'placeholder') ? lodash : func;
+      var object = hasOwnProperty.call(lodash, "placeholder") ? lodash : func;
       return object.placeholder;
     }
 
@@ -5976,7 +5976,7 @@
     function getMapData(map, key) {
       var data = map.__data__;
       return isKeyable(key)
-        ? data[typeof key == 'string' ? 'string' : 'hash']
+        ? data[typeof key == "string" ? "string" : "hash"]
         : data.map;
     }
 
@@ -6091,7 +6091,7 @@
       getTag = function(value) {
         var result = baseGetTag(value),
             Ctor = result == objectTag ? value.constructor : undefined,
-            ctorString = Ctor ? toSource(Ctor) : '';
+            ctorString = Ctor ? toSource(Ctor) : "";
 
         if (ctorString) {
           switch (ctorString) {
@@ -6125,13 +6125,13 @@
             size = data.size;
 
         switch (data.type) {
-          case 'drop':      start += size; break;
-          case 'dropRight': end -= size; break;
-          case 'take':      end = nativeMin(end, start + size); break;
-          case 'takeRight': start = nativeMax(start, end - size); break;
+          case "drop":      start += size; break;
+          case "dropRight": end -= size; break;
+          case "take":      end = nativeMin(end, start + size); break;
+          case "takeRight": start = nativeMax(start, end - size); break;
         }
       }
-      return { 'start': start, 'end': end };
+      return { "start": start, "end": end };
     }
 
     /**
@@ -6189,7 +6189,7 @@
           result = array.constructor(length);
 
       // Add properties assigned by `RegExp#exec`.
-      if (length && typeof array[0] == 'string' && hasOwnProperty.call(array, 'index')) {
+      if (length && typeof array[0] == "string" && hasOwnProperty.call(array, "index")) {
         result.index = array.index;
         result.input = array.input;
       }
@@ -6204,7 +6204,7 @@
      * @returns {Object} Returns the initialized clone.
      */
     function initCloneObject(object) {
-      return (typeof object.constructor == 'function' && !isPrototype(object))
+      return (typeof object.constructor == "function" && !isPrototype(object))
         ? baseCreate(getPrototype(object))
         : {};
     }
@@ -6272,9 +6272,9 @@
         return source;
       }
       var lastIndex = length - 1;
-      details[lastIndex] = (length > 1 ? '& ' : '') + details[lastIndex];
-      details = details.join(length > 2 ? ', ' : ' ');
-      return source.replace(reWrapComment, '{\n/* [wrapped with ' + details + '] */\n');
+      details[lastIndex] = (length > 1 ? "& " : "") + details[lastIndex];
+      details = details.join(length > 2 ? ", " : " ");
+      return source.replace(reWrapComment, "{\n/* [wrapped with " + details + "] */\n");
     }
 
     /**
@@ -6300,7 +6300,7 @@
     function isIndex(value, length) {
       length = length == null ? MAX_SAFE_INTEGER : length;
       return !!length &&
-        (typeof value == 'number' || reIsUint.test(value)) &&
+        (typeof value == "number" || reIsUint.test(value)) &&
         (value > -1 && value % 1 == 0 && value < length);
     }
 
@@ -6319,9 +6319,9 @@
         return false;
       }
       var type = typeof index;
-      if (type == 'number'
+      if (type == "number"
             ? (isArrayLike(object) && isIndex(index, object.length))
-            : (type == 'string' && index in object)
+            : (type == "string" && index in object)
           ) {
         return eq(object[index], value);
       }
@@ -6341,7 +6341,7 @@
         return false;
       }
       var type = typeof value;
-      if (type == 'number' || type == 'symbol' || type == 'boolean' ||
+      if (type == "number" || type == "symbol" || type == "boolean" ||
           value == null || isSymbol(value)) {
         return true;
       }
@@ -6358,8 +6358,8 @@
      */
     function isKeyable(value) {
       var type = typeof value;
-      return (type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean')
-        ? (value !== '__proto__')
+      return (type == "string" || type == "number" || type == "symbol" || type == "boolean")
+        ? (value !== "__proto__")
         : (value === null);
     }
 
@@ -6375,7 +6375,7 @@
       var funcName = getFuncName(func),
           other = lodash[funcName];
 
-      if (typeof other != 'function' || !(funcName in LazyWrapper.prototype)) {
+      if (typeof other != "function" || !(funcName in LazyWrapper.prototype)) {
         return false;
       }
       if (func === other) {
@@ -6414,7 +6414,7 @@
      */
     function isPrototype(value) {
       var Ctor = value && value.constructor,
-          proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto;
+          proto = (typeof Ctor == "function" && Ctor.prototype) || objectProto;
 
       return value === proto;
     }
@@ -6684,7 +6684,7 @@
      * @returns {Function} Returns `wrapper`.
      */
     function setWrapToString(wrapper, reference, bitmask) {
-      var source = (reference + '');
+      var source = (reference + "");
       return setToString(wrapper, insertWrapDetails(source, updateWrapDetails(getWrapDetails(source), bitmask)));
     }
 
@@ -6752,10 +6752,10 @@
     var stringToPath = memoizeCapped(function(string) {
       var result = [];
       if (reLeadingDot.test(string)) {
-        result.push('');
+        result.push("");
       }
       string.replace(rePropName, function(match, number, quote, string) {
-        result.push(quote ? string.replace(reEscapeChar, '$1') : (number || match));
+        result.push(quote ? string.replace(reEscapeChar, "$1") : (number || match));
       });
       return result;
     });
@@ -6768,11 +6768,11 @@
      * @returns {string|symbol} Returns the key.
      */
     function toKey(value) {
-      if (typeof value == 'string' || isSymbol(value)) {
+      if (typeof value == "string" || isSymbol(value)) {
         return value;
       }
-      var result = (value + '');
-      return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
+      var result = (value + "");
+      return (result == "0" && (1 / value) == -INFINITY) ? "-0" : result;
     }
 
     /**
@@ -6788,10 +6788,10 @@
           return funcToString.call(func);
         } catch (e) {}
         try {
-          return (func + '');
+          return (func + "");
         } catch (e) {}
       }
-      return '';
+      return "";
     }
 
     /**
@@ -6804,7 +6804,7 @@
      */
     function updateWrapDetails(details, bitmask) {
       arrayEach(wrapFlags, function(pair) {
-        var value = '_.' + pair[0];
+        var value = "_." + pair[0];
         if ((bitmask & pair[1]) && !arrayIncludes(details, value)) {
           details.push(value);
         }
@@ -7221,7 +7221,7 @@
       if (!length) {
         return [];
       }
-      if (start && typeof start != 'number' && isIterateeCall(array, value, start)) {
+      if (start && typeof start != "number" && isIterateeCall(array, value, start)) {
         start = 0;
         end = length;
       }
@@ -7581,7 +7581,7 @@
       var comparator = last(arrays),
           mapped = arrayMap(arrays, castArrayLikeObject);
 
-      comparator = typeof comparator == 'function' ? comparator : undefined;
+      comparator = typeof comparator == "function" ? comparator : undefined;
       if (comparator) {
         mapped.pop();
       }
@@ -7606,7 +7606,7 @@
      * // => 'a~b~c'
      */
     function join(array, separator) {
-      return array == null ? '' : nativeJoin.call(array, separator);
+      return array == null ? "" : nativeJoin.call(array, separator);
     }
 
     /**
@@ -7930,7 +7930,7 @@
       if (!length) {
         return [];
       }
-      if (end && typeof end != 'number' && isIterateeCall(array, start, end)) {
+      if (end && typeof end != "number" && isIterateeCall(array, start, end)) {
         start = 0;
         end = length;
       }
@@ -8382,7 +8382,7 @@
      */
     var unionWith = baseRest(function(arrays) {
       var comparator = last(arrays);
-      comparator = typeof comparator == 'function' ? comparator : undefined;
+      comparator = typeof comparator == "function" ? comparator : undefined;
       return baseUniq(baseFlatten(arrays, 1, isArrayLikeObject, true), undefined, comparator);
     });
 
@@ -8456,7 +8456,7 @@
      * // => [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }]
      */
     function uniqWith(array, comparator) {
-      comparator = typeof comparator == 'function' ? comparator : undefined;
+      comparator = typeof comparator == "function" ? comparator : undefined;
       return (array && array.length) ? baseUniq(array, undefined, comparator) : [];
     }
 
@@ -8631,7 +8631,7 @@
      */
     var xorWith = baseRest(function(arrays) {
       var comparator = last(arrays);
-      comparator = typeof comparator == 'function' ? comparator : undefined;
+      comparator = typeof comparator == "function" ? comparator : undefined;
       return baseXor(arrayFilter(arrays, isArrayLikeObject), undefined, comparator);
     });
 
@@ -8716,7 +8716,7 @@
       var length = arrays.length,
           iteratee = length > 1 ? arrays[length - 1] : undefined;
 
-      iteratee = typeof iteratee == 'function' ? (arrays.pop(), iteratee) : undefined;
+      iteratee = typeof iteratee == "function" ? (arrays.pop(), iteratee) : undefined;
       return unzipWith(arrays, iteratee);
     });
 
@@ -8840,9 +8840,9 @@
       }
       value = value.slice(start, +start + (length ? 1 : 0));
       value.__actions__.push({
-        'func': thru,
-        'args': [interceptor],
-        'thisArg': undefined
+        "func": thru,
+        "args": [interceptor],
+        "thisArg": undefined
       });
       return new LodashWrapper(value, this.__chain__).thru(function(array) {
         if (length && !array.length) {
@@ -8942,7 +8942,7 @@
       var done = this.__index__ >= this.__values__.length,
           value = done ? undefined : this.__values__[this.__index__++];
 
-      return { 'done': done, 'value': value };
+      return { "done": done, "value": value };
     }
 
     /**
@@ -9040,9 +9040,9 @@
         }
         wrapped = wrapped.reverse();
         wrapped.__actions__.push({
-          'func': thru,
-          'args': [reverse],
-          'thisArg': undefined
+          "func": thru,
+          "args": [reverse],
+          "thisArg": undefined
         });
         return new LodashWrapper(wrapped, this.__chain__);
       }
@@ -9483,7 +9483,7 @@
      */
     var invokeMap = baseRest(function(collection, path, args) {
       var index = -1,
-          isFunc = typeof path == 'function',
+          isFunc = typeof path == "function",
           result = isArrayLike(collection) ? Array(collection.length) : [];
 
       baseEach(collection, function(value) {
@@ -10005,7 +10005,7 @@
      * // => Logs 'done saving!' after the two async saves have completed.
      */
     function after(n, func) {
-      if (typeof func != 'function') {
+      if (typeof func != "function") {
         throw new TypeError(FUNC_ERROR_TEXT);
       }
       n = toInteger(n);
@@ -10058,7 +10058,7 @@
      */
     function before(n, func) {
       var result;
-      if (typeof func != 'function') {
+      if (typeof func != "function") {
         throw new TypeError(FUNC_ERROR_TEXT);
       }
       n = toInteger(n);
@@ -10330,15 +10330,15 @@
           maxing = false,
           trailing = true;
 
-      if (typeof func != 'function') {
+      if (typeof func != "function") {
         throw new TypeError(FUNC_ERROR_TEXT);
       }
       wait = toNumber(wait) || 0;
       if (isObject(options)) {
         leading = !!options.leading;
-        maxing = 'maxWait' in options;
+        maxing = "maxWait" in options;
         maxWait = maxing ? nativeMax(toNumber(options.maxWait) || 0, wait) : maxWait;
-        trailing = 'trailing' in options ? !!options.trailing : trailing;
+        trailing = "trailing" in options ? !!options.trailing : trailing;
       }
 
       function invokeFunc(time) {
@@ -10552,7 +10552,7 @@
      * _.memoize.Cache = WeakMap;
      */
     function memoize(func, resolver) {
-      if (typeof func != 'function' || (resolver != null && typeof resolver != 'function')) {
+      if (typeof func != "function" || (resolver != null && typeof resolver != "function")) {
         throw new TypeError(FUNC_ERROR_TEXT);
       }
       var memoized = function() {
@@ -10595,7 +10595,7 @@
      * // => [1, 3, 5]
      */
     function negate(predicate) {
-      if (typeof predicate != 'function') {
+      if (typeof predicate != "function") {
         throw new TypeError(FUNC_ERROR_TEXT);
       }
       return function() {
@@ -10807,7 +10807,7 @@
      * // => 'hello fred, barney, & pebbles'
      */
     function rest(func, start) {
-      if (typeof func != 'function') {
+      if (typeof func != "function") {
         throw new TypeError(FUNC_ERROR_TEXT);
       }
       start = start === undefined ? start : toInteger(start);
@@ -10849,7 +10849,7 @@
      * // => a Promise of 76
      */
     function spread(func, start) {
-      if (typeof func != 'function') {
+      if (typeof func != "function") {
         throw new TypeError(FUNC_ERROR_TEXT);
       }
       start = start == null ? 0 : nativeMax(toInteger(start), 0);
@@ -10912,17 +10912,17 @@
       var leading = true,
           trailing = true;
 
-      if (typeof func != 'function') {
+      if (typeof func != "function") {
         throw new TypeError(FUNC_ERROR_TEXT);
       }
       if (isObject(options)) {
-        leading = 'leading' in options ? !!options.leading : leading;
-        trailing = 'trailing' in options ? !!options.trailing : trailing;
+        leading = "leading" in options ? !!options.leading : leading;
+        trailing = "trailing" in options ? !!options.trailing : trailing;
       }
       return debounce(func, wait, {
-        'leading': leading,
-        'maxWait': wait,
-        'trailing': trailing
+        "leading": leading,
+        "maxWait": wait,
+        "trailing": trailing
       });
     }
 
@@ -11076,7 +11076,7 @@
      * // => 0
      */
     function cloneWith(value, customizer) {
-      customizer = typeof customizer == 'function' ? customizer : undefined;
+      customizer = typeof customizer == "function" ? customizer : undefined;
       return baseClone(value, CLONE_SYMBOLS_FLAG, customizer);
     }
 
@@ -11131,7 +11131,7 @@
      * // => 20
      */
     function cloneDeepWith(value, customizer) {
-      customizer = typeof customizer == 'function' ? customizer : undefined;
+      customizer = typeof customizer == "function" ? customizer : undefined;
       return baseClone(value, CLONE_DEEP_FLAG | CLONE_SYMBOLS_FLAG, customizer);
     }
 
@@ -11270,8 +11270,8 @@
      * // => false
      */
     var isArguments = baseIsArguments(function() { return arguments; }()) ? baseIsArguments : function(value) {
-      return isObjectLike(value) && hasOwnProperty.call(value, 'callee') &&
-        !propertyIsEnumerable.call(value, 'callee');
+      return isObjectLike(value) && hasOwnProperty.call(value, "callee") &&
+        !propertyIsEnumerable.call(value, "callee");
     };
 
     /**
@@ -11495,7 +11495,7 @@
         return true;
       }
       if (isArrayLike(value) &&
-          (isArray(value) || typeof value == 'string' || typeof value.splice == 'function' ||
+          (isArray(value) || typeof value == "string" || typeof value.splice == "function" ||
             isBuffer(value) || isTypedArray(value) || isArguments(value))) {
         return !value.length;
       }
@@ -11579,7 +11579,7 @@
      * // => true
      */
     function isEqualWith(value, other, customizer) {
-      customizer = typeof customizer == 'function' ? customizer : undefined;
+      customizer = typeof customizer == "function" ? customizer : undefined;
       var result = customizer ? customizer(value, other) : undefined;
       return result === undefined ? baseIsEqual(value, other, undefined, customizer) : !!result;
     }
@@ -11608,7 +11608,7 @@
       }
       var tag = baseGetTag(value);
       return tag == errorTag || tag == domExcTag ||
-        (typeof value.message == 'string' && typeof value.name == 'string' && !isPlainObject(value));
+        (typeof value.message == "string" && typeof value.name == "string" && !isPlainObject(value));
     }
 
     /**
@@ -11638,7 +11638,7 @@
      * // => false
      */
     function isFinite(value) {
-      return typeof value == 'number' && nativeIsFinite(value);
+      return typeof value == "number" && nativeIsFinite(value);
     }
 
     /**
@@ -11695,7 +11695,7 @@
      * // => false
      */
     function isInteger(value) {
-      return typeof value == 'number' && value == toInteger(value);
+      return typeof value == "number" && value == toInteger(value);
     }
 
     /**
@@ -11725,7 +11725,7 @@
      * // => false
      */
     function isLength(value) {
-      return typeof value == 'number' &&
+      return typeof value == "number" &&
         value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
     }
 
@@ -11756,7 +11756,7 @@
      */
     function isObject(value) {
       var type = typeof value;
-      return value != null && (type == 'object' || type == 'function');
+      return value != null && (type == "object" || type == "function");
     }
 
     /**
@@ -11784,7 +11784,7 @@
      * // => false
      */
     function isObjectLike(value) {
-      return value != null && typeof value == 'object';
+      return value != null && typeof value == "object";
     }
 
     /**
@@ -11871,7 +11871,7 @@
      * // => true
      */
     function isMatchWith(object, source, customizer) {
-      customizer = typeof customizer == 'function' ? customizer : undefined;
+      customizer = typeof customizer == "function" ? customizer : undefined;
       return baseIsMatch(object, source, getMatchData(source), customizer);
     }
 
@@ -12015,7 +12015,7 @@
      * // => false
      */
     function isNumber(value) {
-      return typeof value == 'number' ||
+      return typeof value == "number" ||
         (isObjectLike(value) && baseGetTag(value) == numberTag);
     }
 
@@ -12055,8 +12055,8 @@
       if (proto === null) {
         return true;
       }
-      var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
-      return typeof Ctor == 'function' && Ctor instanceof Ctor &&
+      var Ctor = hasOwnProperty.call(proto, "constructor") && proto.constructor;
+      return typeof Ctor == "function" && Ctor instanceof Ctor &&
         funcToString.call(Ctor) == objectCtorString;
     }
 
@@ -12147,7 +12147,7 @@
      * // => false
      */
     function isString(value) {
-      return typeof value == 'string' ||
+      return typeof value == "string" ||
         (!isArray(value) && isObjectLike(value) && baseGetTag(value) == stringTag);
     }
 
@@ -12169,7 +12169,7 @@
      * // => false
      */
     function isSymbol(value) {
-      return typeof value == 'symbol' ||
+      return typeof value == "symbol" ||
         (isObjectLike(value) && baseGetTag(value) == symbolTag);
     }
 
@@ -12469,20 +12469,20 @@
      * // => 3.2
      */
     function toNumber(value) {
-      if (typeof value == 'number') {
+      if (typeof value == "number") {
         return value;
       }
       if (isSymbol(value)) {
         return NAN;
       }
       if (isObject(value)) {
-        var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
-        value = isObject(other) ? (other + '') : other;
+        var other = typeof value.valueOf == "function" ? value.valueOf() : value;
+        value = isObject(other) ? (other + "") : other;
       }
-      if (typeof value != 'string') {
+      if (typeof value != "string") {
         return value === 0 ? value : +value;
       }
-      value = value.replace(reTrim, '');
+      value = value.replace(reTrim, "");
       var isBinary = reIsBinary.test(value);
       return (isBinary || reIsOctal.test(value))
         ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
@@ -12569,7 +12569,7 @@
      * // => '1,2,3'
      */
     function toString(value) {
-      return value == null ? '' : baseToString(value);
+      return value == null ? "" : baseToString(value);
     }
 
     /*------------------------------------------------------------------------*/
@@ -13677,7 +13677,7 @@
      * // => { '0': { '1': 'a' } }
      */
     function setWith(object, path, value, customizer) {
-      customizer = typeof customizer == 'function' ? customizer : undefined;
+      customizer = typeof customizer == "function" ? customizer : undefined;
       return object == null ? object : baseSet(object, path, value, customizer);
     }
 
@@ -13873,7 +13873,7 @@
      * // => { '0': { '1': 'a' } }
      */
     function updateWith(object, path, updater, customizer) {
-      customizer = typeof customizer == 'function' ? customizer : undefined;
+      customizer = typeof customizer == "function" ? customizer : undefined;
       return object == null ? object : baseUpdate(object, path, castFunction(updater), customizer);
     }
 
@@ -14054,15 +14054,15 @@
      * // => a floating-point number between 1.2 and 5.2
      */
     function random(lower, upper, floating) {
-      if (floating && typeof floating != 'boolean' && isIterateeCall(lower, upper, floating)) {
+      if (floating && typeof floating != "boolean" && isIterateeCall(lower, upper, floating)) {
         upper = floating = undefined;
       }
       if (floating === undefined) {
-        if (typeof upper == 'boolean') {
+        if (typeof upper == "boolean") {
           floating = upper;
           upper = undefined;
         }
-        else if (typeof lower == 'boolean') {
+        else if (typeof lower == "boolean") {
           floating = lower;
           lower = undefined;
         }
@@ -14087,7 +14087,7 @@
       }
       if (floating || lower % 1 || upper % 1) {
         var rand = nativeRandom();
-        return nativeMin(lower + (rand * (upper - lower + freeParseFloat('1e-' + ((rand + '').length - 1)))), upper);
+        return nativeMin(lower + (rand * (upper - lower + freeParseFloat("1e-" + ((rand + "").length - 1)))), upper);
       }
       return baseRandom(lower, upper);
     }
@@ -14158,7 +14158,7 @@
      */
     function deburr(string) {
       string = toString(string);
-      return string && string.replace(reLatin, deburrLetter).replace(reComboMark, '');
+      return string && string.replace(reLatin, deburrLetter).replace(reComboMark, "");
     }
 
     /**
@@ -14251,7 +14251,7 @@
     function escapeRegExp(string) {
       string = toString(string);
       return (string && reHasRegExpChar.test(string))
-        ? string.replace(reRegExpChar, '\\$&')
+        ? string.replace(reRegExpChar, "\\$&")
         : string;
     }
 
@@ -14277,7 +14277,7 @@
      * // => 'foo-bar'
      */
     var kebabCase = createCompounder(function(result, word, index) {
-      return result + (index ? '-' : '') + word.toLowerCase();
+      return result + (index ? "-" : "") + word.toLowerCase();
     });
 
     /**
@@ -14301,7 +14301,7 @@
      * // => 'foo bar'
      */
     var lowerCase = createCompounder(function(result, word, index) {
-      return result + (index ? ' ' : '') + word.toLowerCase();
+      return result + (index ? " " : "") + word.toLowerCase();
     });
 
     /**
@@ -14321,7 +14321,7 @@
      * _.lowerFirst('FRED');
      * // => 'fRED'
      */
-    var lowerFirst = createCaseFirst('toLowerCase');
+    var lowerFirst = createCaseFirst("toLowerCase");
 
     /**
      * Pads `string` on the left and right sides if it's shorter than `length`.
@@ -14458,7 +14458,7 @@
       } else if (radix) {
         radix = +radix;
       }
-      return nativeParseInt(toString(string).replace(reTrimStart, ''), radix || 0);
+      return nativeParseInt(toString(string).replace(reTrimStart, ""), radix || 0);
     }
 
     /**
@@ -14540,7 +14540,7 @@
      * // => 'foo_bar'
      */
     var snakeCase = createCompounder(function(result, word, index) {
-      return result + (index ? '_' : '') + word.toLowerCase();
+      return result + (index ? "_" : "") + word.toLowerCase();
     });
 
     /**
@@ -14563,7 +14563,7 @@
      * // => ['a', 'b']
      */
     function split(string, separator, limit) {
-      if (limit && typeof limit != 'number' && isIterateeCall(string, separator, limit)) {
+      if (limit && typeof limit != "number" && isIterateeCall(string, separator, limit)) {
         separator = limit = undefined;
       }
       limit = limit === undefined ? MAX_ARRAY_LENGTH : limit >>> 0;
@@ -14572,7 +14572,7 @@
       }
       string = toString(string);
       if (string && (
-            typeof separator == 'string' ||
+            typeof separator == "string" ||
             (separator != null && !isRegExp(separator))
           )) {
         separator = baseToString(separator);
@@ -14605,7 +14605,7 @@
      * // => 'FOO BAR'
      */
     var startCase = createCompounder(function(result, word, index) {
-      return result + (index ? ' ' : '') + upperFirst(word);
+      return result + (index ? " " : "") + upperFirst(word);
     });
 
     /**
@@ -14769,18 +14769,18 @@
 
       // Compile the regexp to match each delimiter.
       var reDelimiters = RegExp(
-        (options.escape || reNoMatch).source + '|' +
-        interpolate.source + '|' +
-        (interpolate === reInterpolate ? reEsTemplate : reNoMatch).source + '|' +
-        (options.evaluate || reNoMatch).source + '|$'
-      , 'g');
+        (options.escape || reNoMatch).source + "|" +
+        interpolate.source + "|" +
+        (interpolate === reInterpolate ? reEsTemplate : reNoMatch).source + "|" +
+        (options.evaluate || reNoMatch).source + "|$"
+      , "g");
 
       // Use a sourceURL for easier debugging.
-      var sourceURL = '//# sourceURL=' +
-        ('sourceURL' in options
+      var sourceURL = "//# sourceURL=" +
+        ("sourceURL" in options
           ? options.sourceURL
-          : ('lodash.templateSources[' + (++templateCounter) + ']')
-        ) + '\n';
+          : ("lodash.templateSources[" + (++templateCounter) + "]")
+        ) + "\n";
 
       string.replace(reDelimiters, function(match, escapeValue, interpolateValue, esTemplateValue, evaluateValue, offset) {
         interpolateValue || (interpolateValue = esTemplateValue);
@@ -14813,34 +14813,34 @@
       // code to add the data object to the top of the scope chain.
       var variable = options.variable;
       if (!variable) {
-        source = 'with (obj) {\n' + source + '\n}\n';
+        source = "with (obj) {\n" + source + "\n}\n";
       }
       // Cleanup code by stripping empty strings.
-      source = (isEvaluating ? source.replace(reEmptyStringLeading, '') : source)
-        .replace(reEmptyStringMiddle, '$1')
-        .replace(reEmptyStringTrailing, '$1;');
+      source = (isEvaluating ? source.replace(reEmptyStringLeading, "") : source)
+        .replace(reEmptyStringMiddle, "$1")
+        .replace(reEmptyStringTrailing, "$1;");
 
       // Frame code as the function body.
-      source = 'function(' + (variable || 'obj') + ') {\n' +
+      source = "function(" + (variable || "obj") + ") {\n" +
         (variable
-          ? ''
-          : 'obj || (obj = {});\n'
+          ? ""
+          : "obj || (obj = {});\n"
         ) +
         "var __t, __p = ''" +
         (isEscaping
-           ? ', __e = _.escape'
-           : ''
+           ? ", __e = _.escape"
+           : ""
         ) +
         (isEvaluating
-          ? ', __j = Array.prototype.join;\n' +
+          ? ", __j = Array.prototype.join;\n" +
             "function print() { __p += __j.call(arguments, '') }\n"
-          : ';\n'
+          : ";\n"
         ) +
         source +
-        'return __p\n}';
+        "return __p\n}";
 
       var result = attempt(function() {
-        return Function(importsKeys, sourceURL + 'return ' + source)
+        return Function(importsKeys, sourceURL + "return " + source)
           .apply(undefined, importsValues);
       });
 
@@ -14928,7 +14928,7 @@
     function trim(string, chars, guard) {
       string = toString(string);
       if (string && (guard || chars === undefined)) {
-        return string.replace(reTrim, '');
+        return string.replace(reTrim, "");
       }
       if (!string || !(chars = baseToString(chars))) {
         return string;
@@ -14938,7 +14938,7 @@
           start = charsStartIndex(strSymbols, chrSymbols),
           end = charsEndIndex(strSymbols, chrSymbols) + 1;
 
-      return castSlice(strSymbols, start, end).join('');
+      return castSlice(strSymbols, start, end).join("");
     }
 
     /**
@@ -14963,7 +14963,7 @@
     function trimEnd(string, chars, guard) {
       string = toString(string);
       if (string && (guard || chars === undefined)) {
-        return string.replace(reTrimEnd, '');
+        return string.replace(reTrimEnd, "");
       }
       if (!string || !(chars = baseToString(chars))) {
         return string;
@@ -14971,7 +14971,7 @@
       var strSymbols = stringToArray(string),
           end = charsEndIndex(strSymbols, stringToArray(chars)) + 1;
 
-      return castSlice(strSymbols, 0, end).join('');
+      return castSlice(strSymbols, 0, end).join("");
     }
 
     /**
@@ -14996,7 +14996,7 @@
     function trimStart(string, chars, guard) {
       string = toString(string);
       if (string && (guard || chars === undefined)) {
-        return string.replace(reTrimStart, '');
+        return string.replace(reTrimStart, "");
       }
       if (!string || !(chars = baseToString(chars))) {
         return string;
@@ -15004,7 +15004,7 @@
       var strSymbols = stringToArray(string),
           start = charsStartIndex(strSymbols, stringToArray(chars));
 
-      return castSlice(strSymbols, start).join('');
+      return castSlice(strSymbols, start).join("");
     }
 
     /**
@@ -15049,9 +15049,9 @@
           omission = DEFAULT_TRUNC_OMISSION;
 
       if (isObject(options)) {
-        var separator = 'separator' in options ? options.separator : separator;
-        length = 'length' in options ? toInteger(options.length) : length;
-        omission = 'omission' in options ? baseToString(options.omission) : omission;
+        var separator = "separator" in options ? options.separator : separator;
+        length = "length" in options ? toInteger(options.length) : length;
+        omission = "omission" in options ? baseToString(options.omission) : omission;
       }
       string = toString(string);
 
@@ -15068,7 +15068,7 @@
         return omission;
       }
       var result = strSymbols
-        ? castSlice(strSymbols, 0, end).join('')
+        ? castSlice(strSymbols, 0, end).join("")
         : string.slice(0, end);
 
       if (separator === undefined) {
@@ -15083,7 +15083,7 @@
               substring = result;
 
           if (!separator.global) {
-            separator = RegExp(separator.source, toString(reFlags.exec(separator)) + 'g');
+            separator = RegExp(separator.source, toString(reFlags.exec(separator)) + "g");
           }
           separator.lastIndex = 0;
           while ((match = separator.exec(substring))) {
@@ -15147,7 +15147,7 @@
      * // => 'FOO BAR'
      */
     var upperCase = createCompounder(function(result, word, index) {
-      return result + (index ? ' ' : '') + word.toUpperCase();
+      return result + (index ? " " : "") + word.toUpperCase();
     });
 
     /**
@@ -15167,7 +15167,7 @@
      * _.upperFirst('FRED');
      * // => 'FRED'
      */
-    var upperFirst = createCaseFirst('toUpperCase');
+    var upperFirst = createCaseFirst("toUpperCase");
 
     /**
      * Splits `string` into an array of its words.
@@ -15298,7 +15298,7 @@
           toIteratee = getIteratee();
 
       pairs = !length ? [] : arrayMap(pairs, function(pair) {
-        if (typeof pair[1] != 'function') {
+        if (typeof pair[1] != "function") {
           throw new TypeError(FUNC_ERROR_TEXT);
         }
         return [toIteratee(pair[0]), pair[1]];
@@ -15502,7 +15502,7 @@
      * // => ['def']
      */
     function iteratee(func) {
-      return baseIteratee(typeof func == 'function' ? func : baseClone(func, CLONE_DEEP_FLAG));
+      return baseIteratee(typeof func == "function" ? func : baseClone(func, CLONE_DEEP_FLAG));
     }
 
     /**
@@ -15673,7 +15673,7 @@
         object = this;
         methodNames = baseFunctions(source, keys(source));
       }
-      var chain = !(isObject(options) && 'chain' in options) || !!options.chain,
+      var chain = !(isObject(options) && "chain" in options) || !!options.chain,
           isFunc = isFunction(object);
 
       arrayEach(methodNames, function(methodName) {
@@ -15686,7 +15686,7 @@
               var result = object(this.__wrapped__),
                   actions = result.__actions__ = copyArray(this.__actions__);
 
-              actions.push({ 'func': func, 'args': arguments, 'thisArg': object });
+              actions.push({ "func": func, "args": arguments, "thisArg": object });
               result.__chain__ = chainAll;
               return result;
             }
@@ -16042,7 +16042,7 @@
      * // => ['', '']
      */
     function stubString() {
-      return '';
+      return "";
     }
 
     /**
@@ -16187,7 +16187,7 @@
      * _.ceil(6040, -2);
      * // => 6100
      */
-    var ceil = createRound('ceil');
+    var ceil = createRound("ceil");
 
     /**
      * Divide two numbers.
@@ -16229,7 +16229,7 @@
      * _.floor(4060, -2);
      * // => 4000
      */
-    var floor = createRound('floor');
+    var floor = createRound("floor");
 
     /**
      * Computes the maximum value of `array`. If `array` is empty or falsey,
@@ -16422,7 +16422,7 @@
      * _.round(4060, -2);
      * // => 4100
      */
-    var round = createRound('round');
+    var round = createRound("round");
 
     /**
      * Subtract two numbers.
@@ -16820,7 +16820,7 @@
         }
       });
       return source;
-    }()), { 'chain': false });
+    }()), { "chain": false });
 
     /*------------------------------------------------------------------------*/
 
@@ -16834,12 +16834,12 @@
     lodash.VERSION = VERSION;
 
     // Assign default placeholders.
-    arrayEach(['bind', 'bindKey', 'curry', 'curryRight', 'partial', 'partialRight'], function(methodName) {
+    arrayEach(["bind", "bindKey", "curry", "curryRight", "partial", "partialRight"], function(methodName) {
       lodash[methodName].placeholder = lodash;
     });
 
     // Add `LazyWrapper` methods for `_.drop` and `_.take` variants.
-    arrayEach(['drop', 'take'], function(methodName, index) {
+    arrayEach(["drop", "take"], function(methodName, index) {
       LazyWrapper.prototype[methodName] = function(n) {
         n = n === undefined ? 1 : nativeMax(toInteger(n), 0);
 
@@ -16851,28 +16851,28 @@
           result.__takeCount__ = nativeMin(n, result.__takeCount__);
         } else {
           result.__views__.push({
-            'size': nativeMin(n, MAX_ARRAY_LENGTH),
-            'type': methodName + (result.__dir__ < 0 ? 'Right' : '')
+            "size": nativeMin(n, MAX_ARRAY_LENGTH),
+            "type": methodName + (result.__dir__ < 0 ? "Right" : "")
           });
         }
         return result;
       };
 
-      LazyWrapper.prototype[methodName + 'Right'] = function(n) {
+      LazyWrapper.prototype[methodName + "Right"] = function(n) {
         return this.reverse()[methodName](n).reverse();
       };
     });
 
     // Add `LazyWrapper` methods that accept an `iteratee` value.
-    arrayEach(['filter', 'map', 'takeWhile'], function(methodName, index) {
+    arrayEach(["filter", "map", "takeWhile"], function(methodName, index) {
       var type = index + 1,
           isFilter = type == LAZY_FILTER_FLAG || type == LAZY_WHILE_FLAG;
 
       LazyWrapper.prototype[methodName] = function(iteratee) {
         var result = this.clone();
         result.__iteratees__.push({
-          'iteratee': getIteratee(iteratee, 3),
-          'type': type
+          "iteratee": getIteratee(iteratee, 3),
+          "type": type
         });
         result.__filtered__ = result.__filtered__ || isFilter;
         return result;
@@ -16880,8 +16880,8 @@
     });
 
     // Add `LazyWrapper` methods for `_.head` and `_.last`.
-    arrayEach(['head', 'last'], function(methodName, index) {
-      var takeName = 'take' + (index ? 'Right' : '');
+    arrayEach(["head", "last"], function(methodName, index) {
+      var takeName = "take" + (index ? "Right" : "");
 
       LazyWrapper.prototype[methodName] = function() {
         return this[takeName](1).value()[0];
@@ -16889,8 +16889,8 @@
     });
 
     // Add `LazyWrapper` methods for `_.initial` and `_.tail`.
-    arrayEach(['initial', 'tail'], function(methodName, index) {
-      var dropName = 'drop' + (index ? '' : 'Right');
+    arrayEach(["initial", "tail"], function(methodName, index) {
+      var dropName = "drop" + (index ? "" : "Right");
 
       LazyWrapper.prototype[methodName] = function() {
         return this.__filtered__ ? new LazyWrapper(this) : this[dropName](1);
@@ -16910,7 +16910,7 @@
     };
 
     LazyWrapper.prototype.invokeMap = baseRest(function(path, args) {
-      if (typeof path == 'function') {
+      if (typeof path == "function") {
         return new LazyWrapper(this);
       }
       return this.map(function(value) {
@@ -16953,7 +16953,7 @@
     baseForOwn(LazyWrapper.prototype, function(func, methodName) {
       var checkIteratee = /^(?:filter|find|map|reject)|While$/.test(methodName),
           isTaker = /^(?:head|last)$/.test(methodName),
-          lodashFunc = lodash[isTaker ? ('take' + (methodName == 'last' ? 'Right' : '')) : methodName],
+          lodashFunc = lodash[isTaker ? ("take" + (methodName == "last" ? "Right" : "")) : methodName],
           retUnwrapped = isTaker || /^find/.test(methodName);
 
       if (!lodashFunc) {
@@ -16971,7 +16971,7 @@
           return (isTaker && chainAll) ? result[0] : result;
         };
 
-        if (useLazy && checkIteratee && typeof iteratee == 'function' && iteratee.length != 1) {
+        if (useLazy && checkIteratee && typeof iteratee == "function" && iteratee.length != 1) {
           // Avoid lazy use if the iteratee has a "length" value other than `1`.
           isLazy = useLazy = false;
         }
@@ -16983,7 +16983,7 @@
         if (!retUnwrapped && useLazy) {
           value = onlyLazy ? value : new LazyWrapper(this);
           var result = func.apply(value, args);
-          result.__actions__.push({ 'func': thru, 'args': [interceptor], 'thisArg': undefined });
+          result.__actions__.push({ "func": thru, "args": [interceptor], "thisArg": undefined });
           return new LodashWrapper(result, chainAll);
         }
         if (isUnwrapped && onlyLazy) {
@@ -16995,9 +16995,9 @@
     });
 
     // Add `Array` methods to `lodash.prototype`.
-    arrayEach(['pop', 'push', 'shift', 'sort', 'splice', 'unshift'], function(methodName) {
+    arrayEach(["pop", "push", "shift", "sort", "splice", "unshift"], function(methodName) {
       var func = arrayProto[methodName],
-          chainName = /^(?:push|sort|unshift)$/.test(methodName) ? 'tap' : 'thru',
+          chainName = /^(?:push|sort|unshift)$/.test(methodName) ? "tap" : "thru",
           retUnwrapped = /^(?:pop|shift)$/.test(methodName);
 
       lodash.prototype[methodName] = function() {
@@ -17016,16 +17016,16 @@
     baseForOwn(LazyWrapper.prototype, function(func, methodName) {
       var lodashFunc = lodash[methodName];
       if (lodashFunc) {
-        var key = (lodashFunc.name + ''),
+        var key = (lodashFunc.name + ""),
             names = realNames[key] || (realNames[key] = []);
 
-        names.push({ 'name': methodName, 'func': lodashFunc });
+        names.push({ "name": methodName, "func": lodashFunc });
       }
     });
 
     realNames[createHybrid(undefined, WRAP_BIND_KEY_FLAG).name] = [{
-      'name': 'wrapper',
-      'func': undefined
+      "name": "wrapper",
+      "func": undefined
     }];
 
     // Add methods to `LazyWrapper`.
@@ -17057,7 +17057,7 @@
   var _ = runInContext();
 
   // Some AMD build optimizers, like r.js, check for condition patterns like:
-  if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) {
+  if (typeof define == "function" && typeof define.amd == "object" && define.amd) {
     // Expose Lodash on the global object to prevent errors when Lodash is
     // loaded by a script tag in the presence of an AMD loader.
     // See http://requirejs.org/docs/errors.html#mismatch for more details.
@@ -17065,7 +17065,7 @@
     root._ = _;
     // Define as an anonymous module so, through path mapping, it can be
     // referenced as the "underscore" module.
-    define('lodash',function() {
+    define("lodash",function() {
       return _;
     });
   }

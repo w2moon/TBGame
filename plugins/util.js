@@ -146,11 +146,41 @@
         return str;
     }
 
+    /**
+     * 队列函数类,按顺序执行队列中的所有异步函数
+     */
+    function QueueFunction(){
+        this.queues = [];
+        this.next = this.next.bind(this);
+    }
+
+    /**
+     * 添加要执行的cb函数，cb内部必须调用finish函数表示cb执行完成
+     * @param {(finish:()=>void)=>void} cb 把cb加入队列，cb必须接受finish当第一个参数，当cb执行完成后调用finish
+     */
+    QueueFunction.prototype.add = function add(cb){
+        if(this.queues.length == 0){
+            cb(this.next);
+        }
+        else{
+            this.queues.push(cb);
+        }
+    };
+
+    QueueFunction.prototype.next = function next(){
+        if(this.queues.length == 0){
+            return;
+        }
+        var cb = this.queues.shift();
+        cb(this.next);
+    };
+
     var util = {
         waitGroupCallByName,
         waitGroupCallByFunction,
         dateFormat,
         fixSpace,
+        QueueFunction,
     };
 
     function addGlobal(name, obj) {

@@ -59,6 +59,9 @@
     gameMode.addPlayer(player);
     gameMode.addPlayer(monster1);
     gameMode.addPlayer(monster2);
+
+    var viewer = new tbgame.CmdViewer();
+    viewer.createGameModeViewer(gameMode);
     
     gameMode.start();
 

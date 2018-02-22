@@ -1,4 +1,4 @@
-/// <reference path="Entity.ts" />
+
 namespace tbgame{
     enum TurnState{
         /** 抽牌阶段 */
@@ -20,7 +20,6 @@ namespace tbgame{
 
         start(player:Player,finish:()=>void,num:number){
             
-
             log.i(player.getProperty("name")+"回合开始");
             this.curPlayer = player;
 
@@ -31,6 +30,8 @@ namespace tbgame{
             log.i(player.getProperty("name")+"出牌阶段");
             this.state = TurnState.Play;
             player.play();
+
+            finish();
         }
     }
 }

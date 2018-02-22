@@ -1,5 +1,6 @@
-/// <reference path="Entity.ts" />
+
 namespace tbgame{
+    const MAX_TURN_NUM = 3;
     
     /**
      * 游戏模式，这里管理回合在角色间的流转
@@ -92,6 +93,10 @@ namespace tbgame{
         }
 
         next(turnNum:number){
+            if(turnNum>=MAX_TURN_NUM){
+                log.i("回合数超过"+MAX_TURN_NUM+",自动结束");
+                return;
+            }
             log.i("第"+turnNum+"回合开始");
             util.waitGroupCallByFunction(this.players,this.turn.start.bind(this),()=>{
                 log.i("第"+turnNum+"回合结束");

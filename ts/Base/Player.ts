@@ -1,7 +1,7 @@
-/// <reference path="Entity.ts" />
+
 namespace tbgame{
     interface RegionDictionary{
-        [index:string]:Array<Card>;
+        [index:string]:Region;
     }
 
     const PlayerEvent = {
@@ -47,18 +47,6 @@ namespace tbgame{
          * 状态
          */
         buffs:Array<Buff>;
-        /**
-         * 抽牌堆
-         */
-        deck:Array<Card>;
-        /**
-         * 手牌
-         */
-        hand:Array<Card>;
-        /**
-         * 墓地
-         */
-        grave:Array<Card>;
 
         /**
          * 所有区域
@@ -76,9 +64,9 @@ namespace tbgame{
             this.buffs = [];
 
             this.regions = {};
-            this.regions.deck = [];
-            this.regions.hand = [];
-            this.regions.grave = [];
+            this.regions.deck = new Region();
+            this.regions.hand = new Region();
+            this.regions.grave = new Region();
         }
 
         /**
@@ -93,8 +81,8 @@ namespace tbgame{
          */
         prepare(cb:()=>void){
             log.i(this.getProperty("name")+"洗牌");
-            this.deck = _.shuffle(this.cards);
-            this.hand = [];
+            this.regions.deck.init(this.cards);
+            
             // log.i(this.getProperty("name")+"卡牌onPrepare");
             // _.each(this.deck,(card)=>{
             //    // card.onPrepare();
@@ -120,21 +108,27 @@ namespace tbgame{
          * @param cb 抽牌完成
          */
         draw(cb:()=>void){
-            log.i(player.getProperty("name")+"抽牌");
-            if(this.deck.length <= 0){
-                log.i(player.getProperty("name")+"抽牌堆为空，墓地进入抽牌堆");
-                this.deck = this.grave;
-                this.grave = [];
+            log.i(this.getProperty("name")+"抽牌");
+            let deck = this.regions.deck;
+            let hand = this.regions.hand;
 
-                if(this.deck.length <= 0){
-                    log.i(player.getProperty("name")+"无牌可抽");
+            if(deck.size() <= 0){
+                log.i(this.getProperty("name")+"抽牌堆为空，墓地进入抽牌堆");
+                let grave = this.regions.grave;
+
+                grave.moveTo(deck);
+                
+                if(deck.size() <= 0){
+                    log.i(this.getProperty("name")+"无牌可抽");
                 }
                 this.emit(PlayerEvent.RecycleGrave);
             }
 
-            let card = this.deck.pop();
-            this.hand.push(card);
-            this.emit(PlayerEvent.Draw);
+            let card = deck.top();
+            deck.remove(card);
+            hand.add(card);
+            
+            this.emit(PlayerEvent.Draw,card);
             cb();
         }
 
