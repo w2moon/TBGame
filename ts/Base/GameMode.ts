@@ -7,15 +7,19 @@ namespace tbgame{
      */
     export class GameMode extends Entity {
         players:Array<Player>;
+        viewer:Viewer;
         groups:{ [index:string]:Array<Player>};
         /**
          * 当前回合数
          */
         turn:Turn;
-        constructor(){
+
+        
+        constructor(viewer:Viewer){
             super();
             this.players = [];
             this.groups = {};
+            this.viewer = viewer;
         }
 
         /**
@@ -98,7 +102,7 @@ namespace tbgame{
                 return;
             }
             log.i("第"+turnNum+"回合开始");
-            util.waitGroupCallByFunction(this.players,this.turn.start.bind(this),()=>{
+            util.waitGroupCallByFunction(this.players,this.turn.start,()=>{
                 log.i("第"+turnNum+"回合结束");
                 this.next(turnNum+1);
             },turnNum);

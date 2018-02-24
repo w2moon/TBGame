@@ -1,3 +1,5 @@
+/* jshint -W040 */
+/* jshint -W030 */
 (function(){
 "use strict";
 
@@ -135,6 +137,79 @@ function emitMany(handler, isFn, self, args) {
     }
 }
 
+function createWaitCb(num,cb){
+    return function finish(){
+        num--;
+        if(num <= 0){
+            cb();
+        }
+    };
+}
+
+function emitNoneCb(cb,handler, isFn, self) {
+   
+    if (isFn)
+        handler.call(self,cb);
+    else {
+        var len = handler.length;
+        var listeners = arrayClone(handler, len);
+        var finish = createWaitCb(len,cb);
+        
+        for (var i = 0; i < len; ++i){
+            listeners[i].call(self,finish);
+        }
+            
+    }
+}
+function emitOneCb(cb,handler, isFn, self, arg1) {
+    
+    if (isFn)
+        handler.call(self, cb,arg1);
+    else {
+        var len = handler.length;
+        var listeners = arrayClone(handler, len);
+        var finish = createWaitCb(len,cb);
+        for (var i = 0; i < len; ++i)
+            listeners[i].call(self, finish,arg1);
+    }
+}
+function emitTwoCb(cb,handler, isFn, self, arg1, arg2) {
+    if (isFn)
+        handler.call(self, cb,arg1, arg2);
+    else {
+        var len = handler.length;
+        var listeners = arrayClone(handler, len);
+        var finish = createWaitCb(len,cb);
+        for (var i = 0; i < len; ++i)
+            listeners[i].call(self, finish,arg1, arg2);
+    }
+}
+function emitThreeCb(cb,handler, isFn, self, arg1, arg2, arg3) {
+    if (isFn)
+        handler.call(self, cb,arg1, arg2, arg3);
+    else {
+        var len = handler.length;
+        var listeners = arrayClone(handler, len);
+        var finish = createWaitCb(len,cb);
+        for (var i = 0; i < len; ++i)
+            listeners[i].call(self, finish,arg1, arg2, arg3);
+    }
+}
+
+function emitManyCb(cb,handler, isFn, self, args) {
+    if (isFn){
+        args[0] = cb;
+        handler.apply(self, args);
+    }
+    else {
+        var len = handler.length;
+        var listeners = arrayClone(handler, len);
+        args[0] = createWaitCb(len,cb);
+        for (var i = 0; i < len; ++i)
+            listeners[i].apply(self, args);
+    }
+}
+
 EventEmitter.prototype.emit = function emit(type) {
     var er, handler, len, args, i, events, domain;
     var needDomainExit = false;
@@ -201,6 +276,83 @@ EventEmitter.prototype.emit = function emit(type) {
             for (i = 1; i < len; i++)
                 args[i - 1] = arguments[i];
             emitMany(handler, isFn, this, args);
+    }
+
+    if (needDomainExit)
+        domain.exit();
+
+    return true;
+};
+
+EventEmitter.prototype.emitCb = function emitCb(type,cb) {
+    var er, handler, len, args, i, events, domain;
+    var needDomainExit = false;
+    var doError = (type === "error");
+
+    events = this._events;
+    if (events)
+        doError = (doError && events.error == null);
+    else if (!doError)
+        return false;
+
+    domain = this.domain;
+
+    // If there is no 'error' event listener then throw.
+    if (doError) {
+        er = arguments[2];
+        if (domain) {
+            if (!er)
+                er = new Error("Uncaught, unspecified \"error\" event");
+            er.domainEmitter = this;
+            er.domain = domain;
+            er.domainThrown = false;
+            domain.emit("error", er);
+        } else if (er instanceof Error) {
+            throw er; // Unhandled 'error' event
+        } else {
+            // At least give some kind of context to the user
+            var err = new Error("Uncaught, unspecified \"error\" event. (" + er + ")");
+            err.context = er;
+            throw err;
+        }
+        return false;
+    }
+
+    handler = events[type];
+
+    if (!handler){
+        cb();
+        return false;
+    }
+        
+
+    if (domain && this !== process) {
+        domain.enter();
+        needDomainExit = true;
+    }
+
+    var isFn = typeof handler === "function";
+    len = arguments.length;
+    switch (len) {
+        // fast cases
+        case 1:
+            emitNoneCb(cb,handler, isFn, this);
+            break;
+        case 2:
+            emitOneCb(cb,handler, isFn, this, arguments[2]);
+            break;
+        case 3:
+            emitTwoCb(cb,handler, isFn, this, arguments[2], arguments[3]);
+            break;
+        case 4:
+            emitThreeCb(cb,handler, isFn, this, arguments[2], arguments[3], arguments[4]);
+            break;
+            // slower
+        default:
+            args = new Array(len - 1);
+            for (i = 2; i < len; i++)
+                args[i - 1] = arguments[i];
+            emitManyCb(cb,handler, isFn, this, args,len);
     }
 
     if (needDomainExit)

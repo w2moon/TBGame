@@ -1,9 +1,10 @@
 namespace tbgame{
-    const EntityEvent = {
-        PropertySet:"PropertySet",
-        PropertyChanged:"PropertyChanged",
-        TagAdded:"TagAdded",
-        TagRemoved:"TagRemoved",
+    export let gameMode:GameMode;
+    enum EntityEvent  {
+        PropertySet = "PropertySet",
+        PropertyChanged = "PropertyChanged",
+        TagAdded = "TagAdded",
+        TagRemoved = "TagRemoved",
 
     };
     /**
@@ -33,6 +34,7 @@ namespace tbgame{
             this.tags = {};
             this.properties = {};
         }
+
         //region 标签
         hasTag(tag:string){
             return this.tags[tag] > 0;
@@ -90,6 +92,15 @@ namespace tbgame{
 
         getProperty(name:string){
             return this.properties[name];
+        }
+
+        toStringProperty(){
+            let str = "";
+            for(let k in this.properties){
+                let pro = this.properties[k];
+                str += k+":"+pro+" ";
+            }
+            return str;
         }
         //endregion
     }

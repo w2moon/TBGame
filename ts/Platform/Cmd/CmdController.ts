@@ -7,6 +7,15 @@ namespace tbgame{
     });
     
     export class CmdController extends Controller{
+        
+        showCmdList(){
+            
+        }
+
+        choosePlayOperation(cb:()=>void){
+            gameMode.viewer.showPlayOperationUI(this.player);
+            
+        }
         chooseCard(cards:Array<tbgame.Card>,num:number,cb:(choosedCards:Array<tbgame.Card>)=>void){
             log.i("to choose");
             rl.question('What do you think of Node.js? ', (answer:string) => {

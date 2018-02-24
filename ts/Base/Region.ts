@@ -18,6 +18,24 @@ namespace tbgame{
             return this._cards.length;
         }
 
+        getCards():Array<Card>{
+            return this._cards;
+        }
+
+        toString():string{
+            return this.toStringInfo()+":"+this.toStringCards();
+        }
+        toStringInfo():string{
+            return this.name + ":"+this._cards.length;
+        }
+        toStringCards():string{
+            let str = "";
+            _.each(this._cards,card=>{
+                str += card.name + " ";
+            });
+            return str;
+        }
+
         /**
          * 把区域中所有牌移到指定区域
          * @param to 要移动到的区域

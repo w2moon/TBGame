@@ -1,3 +1,4 @@
+/* jshint -W061 */
 (function () {
     "use strict";
    
@@ -57,6 +58,25 @@
         }
         next(0);
         
+    }
+
+    /**
+     * 顺序调用异步函数func num次
+     * @param {number} num 次数
+     * @param {(finish:()=>void)=>void} func 要执行的函数
+     * @param {()=>void} cb 完成后执行函数
+     */
+    function waitCallNum(num,func,cb){
+        function next(idx){
+            if(idx>=num){
+                cb();
+                return;
+            }
+            func(function(){
+                next(idx+1);
+            });
+        }
+        next(0);
     }
 
     /**
@@ -147,11 +167,25 @@
     }
 
     /**
+     * 等待多久后执行函数
+     * @param {number} time 计时时间，单位毫秒
+     * @param {()=>void} cb 计时完成后执行的函数
+     * @returns {()=>void} 取消计时函数
+     */
+    function wait(time,cb){
+        let timer = setTimeout(cb,time);
+        return function(){
+            clearTimeout(timer);
+        };
+    }
+
+    /**
      * 队列函数类,按顺序执行队列中的所有异步函数
      */
     function QueueFunction(){
         this.queues = [];
-        this.next = this.next.bind(this);
+        this._next = this._next.bind(this);
+        this._executing = false;
     }
 
     /**
@@ -159,27 +193,30 @@
      * @param {(finish:()=>void)=>void} cb 把cb加入队列，cb必须接受finish当第一个参数，当cb执行完成后调用finish
      */
     QueueFunction.prototype.add = function add(cb){
-        if(this.queues.length == 0){
-            cb(this.next);
-        }
-        else{
-            this.queues.push(cb);
+        this.queues.push(cb);
+        if(!this._executing){
+            this._next();
         }
     };
 
-    QueueFunction.prototype.next = function next(){
-        if(this.queues.length == 0){
+    QueueFunction.prototype._next = function _next(){
+        var len = this.queues.length;
+        if(len === 0){
+            this._executing = false;
             return;
         }
+        this._executing = true;
         var cb = this.queues.shift();
-        cb(this.next);
+        cb(this._next);
     };
 
     var util = {
         waitGroupCallByName,
         waitGroupCallByFunction,
+        waitCallNum,
         dateFormat,
         fixSpace,
+        wait,
         QueueFunction,
     };
 
