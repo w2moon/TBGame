@@ -2,7 +2,24 @@
 
 namespace tbgame {
     export enum ControllerEvent{
-        
+        ChooseCard1 = "ChooseCard1",
+        ChooseCard2 = "ChooseCard2",
+        ChooseCard3 = "ChooseCard3",
+        ChooseCard4 = "ChooseCard4",
+        ChooseCard5 = "ChooseCard5",
+        ChooseCard6 = "ChooseCard6",
+        ChooseCard7 = "ChooseCard7",
+        ChooseCard8 = "ChooseCard8",
+        ChooseCard9 = "ChooseCard9",
+        ChooseCard10 = "ChooseCard10",
+        Confirm = "Confirm",
+        Cancel = "Cancel",
+        Use = "Use",
+        Deck = "Deck",
+        Grave = "Grave",
+        Back = "Back",
+        Option = "Option",
+
     }
     /**
      * 控制器
