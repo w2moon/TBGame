@@ -30,8 +30,12 @@ namespace tbgame{
                 log.i(playerInPlay.name+" "+playerInPlay.toStringProperty());
             })
             log.i(player.name+" "+player.toStringProperty());
-            log.i(player.name+player.regions.hand.toString());
-            log.i(player.name+player.regions.deck.toStringInfo()+" "+player.regions.grave.toStringInfo());
+
+            let cards = player.regions.hand.getCards();
+            let str = player.regions.hand.toStringInfo()+" " + player.controller.getChooseCardString(cards);
+            
+            log.i(player.name+str);
+            log.i(player.name+player.regions.deck.toStringInfo()+player.controller.getStringEventKey(ControllerEvent.Deck)+" "+player.regions.grave.toStringInfo()+player.controller.getStringEventKey(ControllerEvent.Grave));
             log.i("---------------------------------------------------");
         }
         //endregion

@@ -14,6 +14,7 @@
         "plugins/util.js",
         "plugins/**/*",
         "wlscript/**/*",
+        "ts/keycode.ts",
         "ts/Base/Entity.ts",
         "ts/Base/**/*",
         "ts/Platform/**/*",

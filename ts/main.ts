@@ -50,10 +50,26 @@ gameMode.turn = new tbgame.Turn([
 //定义逻辑语义
 //循环(each,while,break)，加，减，乘，除，函数定义，变量定义，条件控制（if ）,判断（等于 大于 小于 非） 类型（数字 字符串 对象）
 
+let eventKeys:tbgame.EventKeys = {};
+eventKeys[tbgame.ControllerEvent.ChooseCard1] = [tbgame.keycode["1"]];
+eventKeys[tbgame.ControllerEvent.ChooseCard2] = [tbgame.keycode["2"]];
+eventKeys[tbgame.ControllerEvent.ChooseCard3] = [tbgame.keycode["3"]];
+eventKeys[tbgame.ControllerEvent.ChooseCard4] = [tbgame.keycode["4"]];
+eventKeys[tbgame.ControllerEvent.ChooseCard5] = [tbgame.keycode["5"]];
+eventKeys[tbgame.ControllerEvent.ChooseCard6] = [tbgame.keycode["6"]];
+eventKeys[tbgame.ControllerEvent.ChooseCard7] = [tbgame.keycode["7"]];
+eventKeys[tbgame.ControllerEvent.ChooseCard8] = [tbgame.keycode["8"]];
+eventKeys[tbgame.ControllerEvent.ChooseCard9] = [tbgame.keycode["9"]];
+eventKeys[tbgame.ControllerEvent.ChooseCard10] = [tbgame.keycode["0"]];
+eventKeys[tbgame.ControllerEvent.Back] = [tbgame.keycode.q];
+eventKeys[tbgame.ControllerEvent.Confirm] = [tbgame.keycode.e];
+eventKeys[tbgame.ControllerEvent.Deck] = [tbgame.keycode.z];
+eventKeys[tbgame.ControllerEvent.Grave] = [tbgame.keycode.c];
 
 let player = new tbgame.Player();
 player.controller = new tbgame.CmdController();
 player.controller.setPlayer(player);
+player.controller.initEventKeys(eventKeys);
 player.name = "player1";
 player.setProperty("energy", 3);
 player.setProperty("hp", 50);
@@ -69,6 +85,7 @@ player.on(TurnEvent.TurnDrawStart, function (cb) {
 });
 
 player.on(TurnEvent.TurnPlayStart, function (cb) {
+   
     player.play(cb);
 });
 

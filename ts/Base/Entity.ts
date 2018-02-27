@@ -21,6 +21,10 @@ namespace tbgame{
         [index:string]:any;
     }
 
+    export interface FunctionMap{
+        [index:string]:(...args:any[])=>void;
+    }
+
     /**
      * TBGame中游戏对象的定义
      */
@@ -34,6 +38,26 @@ namespace tbgame{
             this.tags = {};
             this.properties = {};
         }
+
+        onEventsMap(eventsMap:FunctionMap){
+            let handlers:Array<()=>void> = [];
+            for(let event in eventsMap){
+                handlers.push(this.on(event,eventsMap[event]));
+            }
+            return function(){
+                if(!handlers){
+                    log.e("重复取消事件注册");
+                    return;
+                }
+                
+                for(let i=0,len=handlers.length;i<len;++i){
+                    handlers[i]();
+                }
+
+                handlers = null;
+            }
+        }
+
 
         //region 标签
         hasTag(tag:string){

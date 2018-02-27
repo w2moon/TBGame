@@ -1,9 +1,9 @@
 declare class EventEmitter   {
     static defaultMaxListeners: number;
 
-    addListener(event: string | symbol, listener: (...args: any[]) => void): this;
-    on(event: string | symbol, listener: (...args: any[]) => void): this;
-    once(event: string | symbol, listener: (...args: any[]) => void): this;
+    addListener(event: string | symbol, listener: (...args: any[]) => void): ()=>void;
+    on(event: string | symbol, listener: (...args: any[]) => void): ()=>void;
+    once(event: string | symbol, listener: (...args: any[]) => void): ()=>void;
     prependListener(event: string | symbol, listener: (...args: any[]) => void): this;
     prependOnceListener(event: string | symbol, listener: (...args: any[]) => void): this;
     removeListener(event: string | symbol, listener: (...args: any[]) => void): this;
