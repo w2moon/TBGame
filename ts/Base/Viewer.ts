@@ -22,6 +22,18 @@ namespace tbgame{
         abstract showPlayOperationUI(player:Player):void;
 
         /**
+         * 显示选择目标界面
+         * @param player 
+         */
+        abstract showChooseTargetUI(player:Player):void;
+
+        /**
+         * 显示卡牌操作
+         * @param card 要显示操作的卡牌
+         */
+        abstract showCardOperationUI(player:Player,card:Card):void;
+
+        /**
          * 卡牌逻辑最好不要等待卡牌动画完成，
          * 这样玩家可以不断操作，并且不用等待动画完成，
          * 这样做需要动画之间可以直接衔接，卡牌上记录当前动画状态来完成转换
@@ -68,5 +80,11 @@ namespace tbgame{
          * @param cb 移动完成的回调
          */
         abstract animMoveRegion(from:Region,to:Region,cb:()=>void):void;
+
+        /**
+         * 播放角色死亡动画
+         * @param player 
+         */
+        abstract animDead(player:Player,cb:()=>void):void;
     }
 }

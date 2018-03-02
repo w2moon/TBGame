@@ -1,6 +1,6 @@
 namespace tbgame{
     export let gameMode:GameMode;
-    enum EntityEvent  {
+    export enum EntityEvent  {
         PropertySet = "PropertySet",
         PropertyChanged = "PropertyChanged",
         TagAdded = "TagAdded",
@@ -25,6 +25,12 @@ namespace tbgame{
         [index:string]:(...args:any[])=>void;
     }
 
+    interface ChangeInfo{
+        causer:Entity;
+    }
+
+   
+
     /**
      * TBGame中游戏对象的定义
      */
@@ -32,11 +38,32 @@ namespace tbgame{
         name:string;
         private tags:TagDictionary;
         protected properties:PropertyDictionary;
+        private propertyProcessAfterGet:{[index:string]:Array<(v:number)=>number>};
+        private propertyProcessBeforeChange:{[index:string]:Array<(v:number,changeInfo:ChangeInfo)=>number>};
         constructor(){
             super();
 
             this.tags = {};
             this.properties = {};
+            this.propertyProcessAfterGet = {};
+            this.propertyProcessBeforeChange = {};
+        }
+
+        addPropertyProcessAfterGet(name:string,func:(value:number)=>number){
+            let funcs = this.propertyProcessAfterGet[name];
+            if(!funcs){
+                funcs = [];
+                this.propertyProcessAfterGet[name] = funcs;
+            }
+            funcs.push(func);
+        }
+        addPropertyProcessBeforeChange(name:string,func:(value:number,causer:Entity)=>number){
+            let funcs = this.propertyProcessBeforeChange[name];
+            if(!funcs){
+                funcs = [];
+                this.propertyProcessBeforeChange[name] = funcs;
+            }
+            funcs.push(func);
         }
 
         onEventsMap(eventsMap:FunctionMap){
@@ -93,7 +120,7 @@ namespace tbgame{
         //endregion
 
         //region 属性
-        setProperty(name:string,v:any){
+        setProperty(name:string,v:number){
             this.properties[name] = v;
             this.emit(EntityEvent.PropertySet,name,v);
         }
@@ -102,20 +129,46 @@ namespace tbgame{
          * 对属性做加法操作，v可以是负的
          * @param name 属性名
          * @param v 变化量
+         * @param causer 造成属性改变的对象
          */
-        changeProperty(name:string,v:number){
+        changeProperty(name:string,v:number,changeInfo:ChangeInfo){
+            
+            let funcs = this.propertyProcessBeforeChange[name];
+            if(funcs){
+                let modified = v;
+                for(let i=0,len=funcs.length;i<len;++i){
+                    modified = funcs[i](modified,changeInfo);
+                }
+                log.i(this.name+"属性值"+name+"变化"+v+"被修改成变化"+modified);
+                v = modified;
+            }
+            
+
+            
             if(!this.properties[name]){
                 this.properties[name] = v;
             }
             else{
                 this.properties[name] += v;
             }
-            this.emit(EntityEvent.PropertyChanged,name,this.properties[name],v);
+            log.i(this.name+"属性值"+name+"变化了"+v+"，从"+(this.properties[name]-v)+"变成"+this.properties[name]);
+            this.emit(EntityEvent.PropertyChanged,name,this.properties[name],v,causer);
         }
 
 
         getProperty(name:string){
-            return this.properties[name];
+            let v = this.properties[name];
+            let funcs = this.propertyProcessAfterGet[name];
+            if(funcs){
+                let modified = v;
+                for(let i=0,len=funcs.length;i<len;++i){
+                    modified = funcs[i](modified);
+                }
+                log.i(this.name+"属性值"+name+"获取结果从"+v+"变化成"+modified);
+                v = modified;
+            }
+            
+            return v;
         }
 
         toStringProperty(){

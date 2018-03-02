@@ -74,7 +74,7 @@ namespace tbgame{
             this.regions.hand = new Region();
             this.regions.hand.name = "手牌";
             this.regions.grave = new Region();
-            this.regions.grave.name = "弃牌";
+            this.regions.grave.name = "坟场";
 
             this._drawOneCard = this._drawOneCard.bind(this);
         }
@@ -132,12 +132,14 @@ namespace tbgame{
             if(deck.size() <= 0){
                 log.i(this.name+"抽牌堆为空，墓地进入抽牌堆");
                 let grave = this.regions.grave;
+                if(grave.size() <= 0){
+                    log.i(this.name+"墓地没有牌可以放入抽牌堆");
+                    cb();
+                    return;
+                }
 
                 grave.moveTo(deck);
                 
-                if(deck.size() <= 0){
-                    log.i(this.name+"无牌可抽");
-                }
                 this.emit(PlayerEvent.RecycleGrave);
                 gameMode.viewer.animMoveRegion(grave,deck,cb);
             }
@@ -150,11 +152,16 @@ namespace tbgame{
 
             this._makeDeckValid(()=>{
                 let deck = this.regions.deck;
+                if(deck.size() <= 0){
+                    log.i(this.name+"无牌可抽");
+                    cb();
+                    return;
+                }
                 let hand = this.regions.hand;
                 let card = deck.top();
                 deck.remove(card);
                 hand.add(card);
-                log.i(player.name+"抽到牌"+card.name);
+                log.i(this.name+"抽到牌"+card.name);
                 this.emit(PlayerEvent.Draw,card);
                 cb();
             });
@@ -164,6 +171,19 @@ namespace tbgame{
 
         play(cb:()=>void){
             this.controller.choosePlayOperation(cb);
+        }
+
+        useCard(card:Card,cb:()=>void){
+            log.i(this.name+"准备使用卡牌"+card.name);
+            card.emitCb("UsePrepare",()=>{
+                log.i(this.name+"使用卡牌"+card.name);
+                card.emitCb("Use",()=>{
+                    log.i(this.name+"完成使用卡牌"+card.name);
+                    card.emitCb("UseFinish",()=>{
+                        cb();
+                    },this);
+                },this)
+            },this);
         }
 
     }

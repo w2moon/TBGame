@@ -210,6 +210,29 @@
         cb(this._next);
     };
 
+    /**
+     * 移除数组中指定位置的元素,比直接用array的splice快1.5倍,这个应该是jit用了才会更快
+     * @param {Array<any>} list 
+     * @param {number} index 
+     */
+    function splice(list,index){
+        for (var i = index, k = i + 1, n = list.length; k < n; i += 1, k += 1)
+            list[i] = list[k];
+        list.pop();
+    }
+
+    /**
+     * 复制数组,这个应该是jit用了才会更快
+     * @param {Array<any>} arr 
+     * @param {number} i 数组长度
+     */
+    function arrayClone(arr, i) {
+        var copy = new Array(i);
+        while (i--)
+            copy[i] = arr[i];
+        return copy;
+    }
+
     var util = {
         waitGroupCallByName,
         waitGroupCallByFunction,
@@ -218,6 +241,8 @@
         fixSpace,
         wait,
         QueueFunction,
+        splice,
+        arrayClone,
     };
 
     function addGlobal(name, obj) {

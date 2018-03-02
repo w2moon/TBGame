@@ -15,6 +15,14 @@
     "type": "git",
     "url": "git@lovigame.com:~/stardock.git"
   },
+  "eslintConfig": {
+    "env": {
+      "es6": true
+    },
+    "ecmaFeatures": {
+        "modules": true
+    }
+  },
   "author": "",
   "license": "ISC",
   "jshintConfig": {

@@ -1,19 +1,19 @@
 
 
 namespace tbgame {
-    const MAX_CHOOSE_CARD_NUM = 10;
+    const MAX_CHOOSE_NUM = 10;
 
     export enum ControllerEvent{
-        ChooseCard1 = "ChooseCard1",
-        ChooseCard2 = "ChooseCard2",
-        ChooseCard3 = "ChooseCard3",
-        ChooseCard4 = "ChooseCard4",
-        ChooseCard5 = "ChooseCard5",
-        ChooseCard6 = "ChooseCard6",
-        ChooseCard7 = "ChooseCard7",
-        ChooseCard8 = "ChooseCard8",
-        ChooseCard9 = "ChooseCard9",
-        ChooseCard10 = "ChooseCard10",
+        Choose1 = "Choose1",
+        Choose2 = "Choose2",
+        Choose3 = "Choose3",
+        Choose4 = "Choose4",
+        Choose5 = "Choose5",
+        Choose6 = "Choose6",
+        Choose7 = "Choose7",
+        Choose8 = "Choose8",
+        Choose9 = "Choose9",
+        Choose10 = "Choose10",
         Confirm = "Confirm",
         Deck = "Deck",
         Grave = "Grave",
@@ -21,9 +21,13 @@ namespace tbgame {
 
     }
 
-    function indexToControllerEvent(idx:number):any{
+    /**
+     * 把数字转成对应的选项事件
+     * @param idx 0对应Choose1事件，1对应Choose2事件
+     */
+    export function toChooseEvent(idx:number):any{
         let num = idx+1;
-        return "ChooseCard"+num;
+        return "Choose"+num;
     }
 
    
@@ -33,6 +37,8 @@ namespace tbgame {
     }
 
     
+
+    
     /**
      * 控制器
      */
@@ -40,9 +46,28 @@ namespace tbgame {
         player:Player;
         protected _eventKeys:EventKeys;
         private _keyEventMap:any;
+
+        
         constructor(){
             super();
+
+            this.pressKey = this.pressKey.bind(this);
         }
+
+      
+        /**
+         * 开始监听用户输入
+         */
+        enableInput():void{
+            log.w("Controller的子类需要实现enableInput方法");
+        }
+        /** 
+         * 停止监听用户输入
+        */
+        disableInput():void{
+            log.w("Controller的子类需要实现disableInput方法");
+        }
+        
 
         initEventKeys(eventKeys:EventKeys):void{
             this._eventKeys = eventKeys;
@@ -65,24 +90,24 @@ namespace tbgame {
 
             this._keyEventMap = keyEventMap;
         }
+        
 
-        protected _registeChooseCardEvent(events:FunctionMap,func:(idx:number)=>void){
-            events[ControllerEvent.ChooseCard1] = ()=> func(1);
-            events[ControllerEvent.ChooseCard2] = ()=> func(2);
-            events[ControllerEvent.ChooseCard3] = ()=> func(3);
-            events[ControllerEvent.ChooseCard4] = ()=> func(4);
-            events[ControllerEvent.ChooseCard5] = ()=> func(5);
-            events[ControllerEvent.ChooseCard6] = ()=> func(6);
-            events[ControllerEvent.ChooseCard7] = ()=> func(7);
-            events[ControllerEvent.ChooseCard8] = ()=> func(8);
-            events[ControllerEvent.ChooseCard9] = ()=> func(9);
-            events[ControllerEvent.ChooseCard10] = ()=> func(10);
+        private _wrapTargetEventFunc(target:Entity,func:(target:Entity)=>void){
+            return ()=>func(target);
+        }
+
+       
+
+        protected formatChooseTargetEvent(events:FunctionMap,targets:Array<Entity>,func:(target:Entity)=>void){
+            for(let i=0,len=targets.length;i<MAX_CHOOSE_NUM && i<len;++i){
+                events[toChooseEvent(i)] = this._wrapTargetEventFunc(targets[i],func);
+            }
         }
 
         getChooseCardString(cards:Array<Card>){
             let str = "";
-            for(let i=0;i<MAX_CHOOSE_CARD_NUM && i < cards.length;++i){
-                str += cards[i].name + this.getStringEventKey(indexToControllerEvent(i))+" ";
+            for(let i=0;i<MAX_CHOOSE_NUM && i < cards.length;++i){
+                str += cards[i].name + this.getStringEventKey(toChooseEvent(i))+" ";
             }
             return str;
         }
@@ -123,6 +148,14 @@ namespace tbgame {
          */
         choosePlayOperation(cb:()=>void){
             cb();
+        }
+
+        /** 
+         * 选择一个player
+         * @param cb 选择了角色，可能为null
+        */
+       chooseTarget(condition:(player:Player)=>boolean,cb:(player:Player)=>void){
+            cb(null);
         }
 
         /**

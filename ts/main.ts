@@ -3,22 +3,39 @@
 let cards: Array<tbgame.Card> = [];
 function createAttackCard(): tbgame.Card {
     let card = new tbgame.Card();
-    card.name = "sword";
+    card.name = "剑";
     card.setProperty("type", "attack");
     card.setProperty("cost", 1);
     card.setProperty("attack", 5);
+    card.on("Use",(finish,player:tbgame.Player)=>{
+        //player choose
+        player.controller.chooseTarget((testPlayer:tbgame.Player)=>{
+            return testPlayer !== player;
+        },
+        (target:tbgame.Player)=>{
+            log.i("对"+target.name+"使用卡牌"+card.name);
+            gameMode.viewer.animCardPlayToTarget(card,target,()=>{
+                target.changeProperty("hp",-card.getProperty("attack"),{
+                    causer:player,
+                });
+                finish();
+            });
+            
+        });
+        
+    });
     return card;
 }
 
 function createDefenseCard(): tbgame.Card {
     let card = new tbgame.Card();
-    card.name = "shield";
+    card.name = "盾";
     card.setProperty("type", "skill");
     card.setProperty("cost", 1);
     card.setProperty("defense", 5);
     return card;
 }
-for (let i = 0; i < 5; ++i) {
+for (let i = 0; i < 3; ++i) {
     cards.push(createAttackCard());
     cards.push(createDefenseCard());
 }
@@ -51,16 +68,16 @@ gameMode.turn = new tbgame.Turn([
 //循环(each,while,break)，加，减，乘，除，函数定义，变量定义，条件控制（if ）,判断（等于 大于 小于 非） 类型（数字 字符串 对象）
 
 let eventKeys:tbgame.EventKeys = {};
-eventKeys[tbgame.ControllerEvent.ChooseCard1] = [tbgame.keycode["1"]];
-eventKeys[tbgame.ControllerEvent.ChooseCard2] = [tbgame.keycode["2"]];
-eventKeys[tbgame.ControllerEvent.ChooseCard3] = [tbgame.keycode["3"]];
-eventKeys[tbgame.ControllerEvent.ChooseCard4] = [tbgame.keycode["4"]];
-eventKeys[tbgame.ControllerEvent.ChooseCard5] = [tbgame.keycode["5"]];
-eventKeys[tbgame.ControllerEvent.ChooseCard6] = [tbgame.keycode["6"]];
-eventKeys[tbgame.ControllerEvent.ChooseCard7] = [tbgame.keycode["7"]];
-eventKeys[tbgame.ControllerEvent.ChooseCard8] = [tbgame.keycode["8"]];
-eventKeys[tbgame.ControllerEvent.ChooseCard9] = [tbgame.keycode["9"]];
-eventKeys[tbgame.ControllerEvent.ChooseCard10] = [tbgame.keycode["0"]];
+eventKeys[tbgame.ControllerEvent.Choose1] = [tbgame.keycode["1"]];
+eventKeys[tbgame.ControllerEvent.Choose2] = [tbgame.keycode["2"]];
+eventKeys[tbgame.ControllerEvent.Choose3] = [tbgame.keycode["3"]];
+eventKeys[tbgame.ControllerEvent.Choose4] = [tbgame.keycode["4"]];
+eventKeys[tbgame.ControllerEvent.Choose5] = [tbgame.keycode["5"]];
+eventKeys[tbgame.ControllerEvent.Choose6] = [tbgame.keycode["6"]];
+eventKeys[tbgame.ControllerEvent.Choose7] = [tbgame.keycode["7"]];
+eventKeys[tbgame.ControllerEvent.Choose8] = [tbgame.keycode["8"]];
+eventKeys[tbgame.ControllerEvent.Choose9] = [tbgame.keycode["9"]];
+eventKeys[tbgame.ControllerEvent.Choose10] = [tbgame.keycode["0"]];
 eventKeys[tbgame.ControllerEvent.Back] = [tbgame.keycode.q];
 eventKeys[tbgame.ControllerEvent.Confirm] = [tbgame.keycode.e];
 eventKeys[tbgame.ControllerEvent.Deck] = [tbgame.keycode.z];
@@ -85,9 +102,20 @@ player.on(TurnEvent.TurnDrawStart, function (cb) {
 });
 
 player.on(TurnEvent.TurnPlayStart, function (cb) {
-   
     player.play(cb);
 });
+
+function addNormalEvent(ent:tbgame.Entity){
+    ent.on(tbgame.EntityEvent.PropertyChanged,(name,value,changed)=>{
+        if(name === "hp"){
+            if(value <= 0){
+                log.i(ent.name+"死亡");
+            }
+        }
+    });
+}
+
+
 
 
 let monster1 = new tbgame.Player();
@@ -108,7 +136,9 @@ gameMode.addPlayer(player);
 gameMode.addPlayer(monster1);
 gameMode.addPlayer(monster2);
 
-
+addNormalEvent(player);
+addNormalEvent(monster1);
+addNormalEvent(monster2);
 
 gameMode.start();
 

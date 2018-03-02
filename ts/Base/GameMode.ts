@@ -97,7 +97,7 @@ namespace tbgame{
         }
 
         next(turnNum:number){
-            if(turnNum>=MAX_TURN_NUM){
+            if(turnNum>MAX_TURN_NUM){
                 log.i("回合数超过"+MAX_TURN_NUM+",自动结束");
                 return;
             }

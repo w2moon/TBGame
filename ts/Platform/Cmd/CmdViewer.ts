@@ -2,8 +2,9 @@ namespace tbgame{
 
     
 
-    const WAIT_TIME_LITTLE = 1;
-    const WAIT_TIME_NORMAL = 1;
+    const WAIT_TIME_LITTLE = 1000;
+    const WAIT_TIME_NORMAL = 1000;
+    
     export class CmdViewer extends Viewer {
 
         //region 创建显示对象
@@ -19,8 +20,7 @@ namespace tbgame{
 
         //region 显示相关界面
         showPlayOperationUI(player:Player){
-            log.i(player.name+"显示操作界面");
-            log.i("---------------------------------------------------");
+            log.i(player.name+"显示操作界面"+"---------------------------------------------------");
 
             let players = gameMode.players;
             _.each(gameMode.players,playerInPlay=>{
@@ -36,6 +36,25 @@ namespace tbgame{
             
             log.i(player.name+str);
             log.i(player.name+player.regions.deck.toStringInfo()+player.controller.getStringEventKey(ControllerEvent.Deck)+" "+player.regions.grave.toStringInfo()+player.controller.getStringEventKey(ControllerEvent.Grave));
+            log.i("回合结束"+player.controller.getStringEventKey(ControllerEvent.Confirm));
+            log.i("---------------------------------------------------");
+        }
+
+        showCardOperationUI(player:Player,card:Card):void{
+            log.i(player.name+"显示卡牌界面"+"---------------------------------------------------");
+            log.i(card.toStringInfo());
+            log.i("使用"+player.controller.getStringEventKey(ControllerEvent.Confirm)+" 取消"+player.controller.getStringEventKey(ControllerEvent.Back));
+            log.i("---------------------------------------------------");
+        }
+
+        showChooseTargetUI(player:Player){
+            log.i(player.name+"显示选择对象界面"+"---------------------------------------------------");
+            let players = gameMode.players;
+            let str = "";
+            for(let i=0;i<players.length;++i){
+                str += players[i].name+player.controller.getStringEventKey(toChooseEvent(i))+" ";
+            }
+            log.i(str);
             log.i("---------------------------------------------------");
         }
         //endregion
@@ -95,6 +114,11 @@ namespace tbgame{
          */
         animMoveRegion(from:Region,to:Region,cb:()=>void){
             log.i("<动画>从Region"+from.name+"到Region"+to.name);
+            util.wait(WAIT_TIME_NORMAL,cb);
+        }
+
+        animDead(player:Player,cb:()=>void){
+            log.i("<动画>"+player.name+"死亡");
             util.wait(WAIT_TIME_NORMAL,cb);
         }
         //endregion

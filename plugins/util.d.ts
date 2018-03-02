@@ -8,4 +8,6 @@ declare namespace util{
     export class QueueFunction{
         add(cb:(finish:()=>void)=>void):void;
     }
+    export function splice(arr:Array<any>,index:number):void;
+    export function arrayClone(arr:Array<any>,len:number):Array<any>;
 }

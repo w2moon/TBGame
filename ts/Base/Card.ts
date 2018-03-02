@@ -25,6 +25,10 @@ namespace tbgame{
             this.placeType = PlaceType.Deck;
         }
 
+        toStringInfo(){
+            return "名称:"+this.name;
+        }
+
         
     }
 }
