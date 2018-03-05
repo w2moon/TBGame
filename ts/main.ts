@@ -4,7 +4,6 @@ let cards: Array<tbgame.Card> = [];
 function createAttackCard(): tbgame.Card {
     let card = new tbgame.Card();
     card.name = "剑";
-    card.setProperty("type", "attack");
     card.setProperty("cost", 1);
     card.setProperty("attack", 5);
     card.on("Use",(finish,player:tbgame.Player)=>{
@@ -30,7 +29,6 @@ function createAttackCard(): tbgame.Card {
 function createDefenseCard(): tbgame.Card {
     let card = new tbgame.Card();
     card.name = "盾";
-    card.setProperty("type", "skill");
     card.setProperty("cost", 1);
     card.setProperty("defense", 5);
     return card;

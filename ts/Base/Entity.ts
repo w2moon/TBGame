@@ -57,7 +57,7 @@ namespace tbgame{
             }
             funcs.push(func);
         }
-        addPropertyProcessBeforeChange(name:string,func:(value:number,causer:Entity)=>number){
+        addPropertyProcessBeforeChange(name:string,func:(value:number,changeInfo:ChangeInfo)=>number){
             let funcs = this.propertyProcessBeforeChange[name];
             if(!funcs){
                 funcs = [];
@@ -152,7 +152,7 @@ namespace tbgame{
                 this.properties[name] += v;
             }
             log.i(this.name+"属性值"+name+"变化了"+v+"，从"+(this.properties[name]-v)+"变成"+this.properties[name]);
-            this.emit(EntityEvent.PropertyChanged,name,this.properties[name],v,causer);
+            this.emit(EntityEvent.PropertyChanged,name,this.properties[name],v,changeInfo);
         }
 
 
