@@ -1,4 +1,7 @@
 namespace tbgame{
+    export abstract class Logic{
+        abstract exec(card:Card,player:Player):void;
+    }
     /**
      * keyword分多种？
      * 一种代表它监听某种事件，事件发生后触发的结果写在卡牌里？结果应该也独立，这样才能有卡扎库斯一样的自定义卡，
@@ -12,23 +15,14 @@ namespace tbgame{
      * 发现，过滤个牌池
      * 连击效果
      */
-    export class Keyword{
+    export class Keyword extends Logic{
         name:string;
         private card:Card;
         private player:Player;
         constructor(card:Card,player:Player){
-
+            super();
         }
-        onEnterGame(){
-
-        }
-        onFinishGame(){
-
-        }
-        onEnterRegion(region:Region){
-
-        }
-        onLeaveRegion(region:Region){
+        exec():void{
 
         }
 
