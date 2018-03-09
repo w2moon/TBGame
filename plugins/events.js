@@ -147,6 +147,57 @@ function createWaitCb(num,cb){
         }
     };
 }
+function nextArrIndexNone(idx,len,arr,self,cb){
+    if(idx>=len){
+        cb();
+        return;
+    }
+    arr[idx].call(self, function(){
+        nextArrIndexNone(idx+1,len,arr,self,cb);
+    });
+    
+}
+function nextArrIndexOne(idx,len,arr,self,arg1,cb){
+    if(idx>=len){
+        cb();
+        return;
+    }
+    arr[idx].call(self, function(){
+        nextArrIndexOne(idx+1,len,arr,self,arg1,cb);
+    },arg1);
+    
+}
+function nextArrIndexTwo(idx,len,arr,self,arg1,arg2,cb){
+    if(idx>=len){
+        cb();
+        return;
+    }
+    arr[idx].call(self, function(){
+        nextArrIndexTwo(idx+1,len,arr,self,arg1,arg2,cb);
+    },arg1,arg2);
+    
+}
+function nextArrIndexThree(idx,len,arr,self,arg1,arg2,arg3,cb){
+    if(idx>=len){
+        cb();
+        return;
+    }
+    arr[idx].call(self, function(){
+        nextArrIndexThree(idx+1,len,arr,self,arg1,arg2,arg3,cb);
+    },arg1,arg2,arg3);
+    
+}
+function nextArrIndexMany(idx,len,arr,self,args,cb){
+    if(idx>=len){
+        cb();
+        return;
+    }
+    args[0] = function(){
+        nextArrIndexMany(idx+1,len,arr,self,args,cb);
+    };
+    arr[idx].apply(self, args);
+    
+}
 
 function emitNoneCb(cb,handler, isFn, self) {
    
@@ -155,14 +206,12 @@ function emitNoneCb(cb,handler, isFn, self) {
     else {
         var len = handler.length;
         var listeners = arrayClone(handler, len);
-        var finish = createWaitCb(len,cb);
-        
-        for (var i = 0; i < len; ++i){
-            listeners[i].call(self,finish);
-        }
+        nextArrIndexNone(0,len,listeners,self,cb);
             
     }
 }
+
+
 function emitOneCb(cb,handler, isFn, self, arg1) {
     
     if (isFn)
@@ -170,9 +219,9 @@ function emitOneCb(cb,handler, isFn, self, arg1) {
     else {
         var len = handler.length;
         var listeners = arrayClone(handler, len);
-        var finish = createWaitCb(len,cb);
-        for (var i = 0; i < len; ++i)
-            listeners[i].call(self, finish,arg1);
+
+        nextArrIndexOne(0,len,listeners,self,arg1,cb);
+
     }
 }
 function emitTwoCb(cb,handler, isFn, self, arg1, arg2) {
@@ -181,9 +230,7 @@ function emitTwoCb(cb,handler, isFn, self, arg1, arg2) {
     else {
         var len = handler.length;
         var listeners = arrayClone(handler, len);
-        var finish = createWaitCb(len,cb);
-        for (var i = 0; i < len; ++i)
-            listeners[i].call(self, finish,arg1, arg2);
+        nextArrIndexTwo(0,len,listeners,self,arg1,arg2,cb);
     }
 }
 function emitThreeCb(cb,handler, isFn, self, arg1, arg2, arg3) {
@@ -192,9 +239,7 @@ function emitThreeCb(cb,handler, isFn, self, arg1, arg2, arg3) {
     else {
         var len = handler.length;
         var listeners = arrayClone(handler, len);
-        var finish = createWaitCb(len,cb);
-        for (var i = 0; i < len; ++i)
-            listeners[i].call(self, finish,arg1, arg2, arg3);
+        nextArrIndexThree(0,len,listeners,self,arg1,arg2,arg3,cb);
     }
 }
 
@@ -206,9 +251,7 @@ function emitManyCb(cb,handler, isFn, self, args) {
     else {
         var len = handler.length;
         var listeners = arrayClone(handler, len);
-        args[0] = createWaitCb(len,cb);
-        for (var i = 0; i < len; ++i)
-            listeners[i].apply(self, args);
+        nextArrIndexMany(0,len,listeners,self,args,cb);
     }
 }
 

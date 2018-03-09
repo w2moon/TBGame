@@ -29,6 +29,14 @@ namespace tbgame{
             return "名称:"+this.name;
         }
 
+        /**
+         * 添加关键字
+         * @param keyword 
+         */
+        addKeyword(keyword:Keyword){
+
+        }
+
         
     }
 }
