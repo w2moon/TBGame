@@ -95,7 +95,6 @@ namespace tbgame {
         private _wrapTargetEventFunc(target:Entity,func:(target:Entity)=>void){
             return ()=>func(target);
         }
-
        
 
         protected formatChooseTargetEvent(events:FunctionMap,targets:Array<Entity>,func:(target:Entity)=>void){
