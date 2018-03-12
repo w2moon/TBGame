@@ -6,10 +6,13 @@ namespace tbgame{
      * 监听事件的对象,在这里是this
      * 监听事件对象的所有者,一般是this.player
      * 事件参数
+     * 
+     * 
     */
     export abstract class Logic{
         abstract exec(card:Card,player:Player):void;
     }
+    
     /**
      * 对于牌的使用来说有打出者和所有者
      * keyword分多种？
@@ -32,7 +35,7 @@ namespace tbgame{
         name:string;
         private card:Card;
         private player:Player;
-        constructor(card:Card,player:Player){
+        constructor(card?:Card,player?:Player){
             super();
         }
         exec():void{
@@ -40,4 +43,6 @@ namespace tbgame{
         }
 
     }
+
+    let shield = new Keyword();
 }
